@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.service.model;
+package educationalproject.programmingstuff.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,20 +9,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Map;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Order {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-    private Map<Long, Integer> itemsTable;
+    private String name;
+
+    private String surname;
+
 }

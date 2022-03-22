@@ -1,27 +1,25 @@
 package educationalproject.programmingstuff.service;
 
+import educationalproject.programmingstuff.model.Item;
+import educationalproject.programmingstuff.model.Order1;
+import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repository.ItemRepository;
 import educationalproject.programmingstuff.repository.OrderRepository;
 import educationalproject.programmingstuff.repository.UserRepository;
-import educationalproject.programmingstuff.service.model.Item;
-import educationalproject.programmingstuff.service.model.Order;
-import educationalproject.programmingstuff.service.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
-
+@AllArgsConstructor
 public class MainService {
 
     private UserRepository userRepository;
-    private ItemRepository itemRepository;
-    private OrderRepository orderRepository;
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+    private ItemRepository itemRepository;
+
+    private OrderRepository orderRepository;
 
     public void prepareTestData() {
 
@@ -55,10 +53,10 @@ public class MainService {
 
         itemRepository.flush();
 
-        Order orderUno = Order.builder().build();
+        Order1 orderUno = Order1.builder().build();
         orderRepository.save(orderUno);
 
-        Order orderDos = Order.builder().build();
+        Order1 orderDos = Order1.builder().build();
         orderRepository.save(orderDos);
 
         orderRepository.flush();

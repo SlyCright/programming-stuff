@@ -4,24 +4,27 @@ import educationalproject.programmingstuff.repository.ItemRepository;
 import educationalproject.programmingstuff.repository.OrderRepository;
 import educationalproject.programmingstuff.repository.UserRepository;
 import educationalproject.programmingstuff.service.MainService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-
+@AllArgsConstructor
 public class Controller {
 
     private UserRepository userRepository;
+
     private ItemRepository itemRepository;
+
     private OrderRepository orderRepository;
 
-    @PutMapping("/dataPrep")
+    private MainService mainService;
+
+    @GetMapping("/dataPrep")
     public void dataPrep() {
-        MainService mainService=new MainService();
         mainService.prepareTestData();
     }
 

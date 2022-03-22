@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.service.model;
+package educationalproject.programmingstuff.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,21 +9,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class User {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String surname;
-    private List<Order> orders;
+    private String title;
+
+    private String description;
+
+    private BigDecimal price;
+
 }
