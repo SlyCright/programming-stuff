@@ -1,6 +1,5 @@
 package educationalproject.programmingstuff.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,30 +7,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor //todo q: if it needed RequiredArgsConstructors for Entities?
+@AllArgsConstructor
 @Entity
-@Table(name="Items")
-public class Item {
+@Table(name = "Orders")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
-    private String description;
-
-    private BigDecimal price;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<Item> items;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    private Order order;
+    private User user;
 
 }
-

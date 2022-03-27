@@ -9,9 +9,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//todo swagger
-//todo design and make relationships between entities
-
 @SpringBootApplication
 @EnableSwagger2
 public class ProgrammingStuffApplication {
