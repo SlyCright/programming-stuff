@@ -1,15 +1,29 @@
 package educationalproject.programmingstuff.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.net.PortUnreachableException;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Users")
 public class User {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
+
     private String surname;
-    private Order currentOrder;
-    private ArrayList<Order> fulfilledOrders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 }
