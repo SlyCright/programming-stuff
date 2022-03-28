@@ -5,20 +5,20 @@ import educationalproject.programmingstuff.repository.ItemRepository;
 import educationalproject.programmingstuff.repository.OrderRepository;
 import educationalproject.programmingstuff.repository.UserRepository;
 import educationalproject.programmingstuff.service.TestService;
-import educationalproject.programmingstuff.service.UserServiceImpl;
+import educationalproject.programmingstuff.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class Controller {
+public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService; //todo q: What if several implementations exits? What object will be injected?
 
     private final UserRepository userRepository;
 
@@ -28,29 +28,23 @@ public class Controller {
 
     private final TestService testService;
 
-    @GetMapping("/dataPrep")
-    public void dataPrep() {
-        testService.prepareTestData();
-    }
+    boolean isPreparationWasStartedOnce = false;
 
-    @GetMapping("/dataGet")
-    public List<List> dataGet() {
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> usersByName(@RequestParam String name) {
 
-        List<List> lists = new ArrayList<>();
+        //todo q: What if "name" is empty? What if include numbers or something? where and when we checks requests?
 
-        lists.add(userRepository.findAll());
-        lists.add(itemRepository.findAll());
-        lists.add(orderRepository.findAll());
-
-        return lists;
-    }
-
-    @GetMapping("/userByName")
-    public List<User> usersByName(@RequestParam String name) {
+        if (!isPreparationWasStartedOnce) {
+            testService.prepareTestData();
+            isPreparationWasStartedOnce = true;
+        }
 
         List<User> users = userService.getUsersByName(name);
 
-        return  users;
+        int usersTotal=users.size(); //todo q: how to make two-parts response? If "usersTotal" used in HTML header for example.
+
+        return ResponseEntity.ok(users);
 
     }
 

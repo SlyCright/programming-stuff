@@ -1,10 +1,9 @@
 
 ---- TODO
 
-Make endpoint "GetUserByName"
-ResponceEntity.ok in controller
-
 ---- DONE
 
+Make endpoint "GetUserByName"
+Add ResponceEntity.ok in controller
 Design and make relationships (associations) between entities
 Add swagger

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor //todo q: if it needed RequiredArgsConstructors for Entities?
+@AllArgsConstructor //todo g: if it needed RequiredArgsConstructors for Entities?
 @Entity
 @Table(name="Items")
 public class Item {

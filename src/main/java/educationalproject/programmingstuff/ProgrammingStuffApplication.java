@@ -26,4 +26,6 @@ public class ProgrammingStuffApplication {
                 .build();
     }
 
+    //todo q: where I can place my code to execute after spring makes all preparations
+
 }

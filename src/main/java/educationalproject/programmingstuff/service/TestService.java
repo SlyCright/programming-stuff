@@ -58,7 +58,7 @@ public class TestService {
 
         User userTres = User.builder()
                 .name("Ivan")
-                .surname("Kuznetsov")
+                .surname("Kuznets")
                 .orders(testOrders)
                 .build();
 
