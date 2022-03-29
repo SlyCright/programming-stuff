@@ -1,11 +1,12 @@
 package educationalproject.programmingstuff.controller;
 
-import educationalproject.programmingstuff.model.User;
+
 import educationalproject.programmingstuff.repository.ItemRepository;
 import educationalproject.programmingstuff.repository.OrderRepository;
 import educationalproject.programmingstuff.repository.UserRepository;
 import educationalproject.programmingstuff.service.TestService;
 import educationalproject.programmingstuff.service.UserService;
+import educationalproject.programmingstuff.service.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +32,14 @@ public class UserController {
     boolean isPreparationWasStartedOnce = false;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> usersByName(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<UserResponseDto>> usersByName(@RequestParam(required = false) String name) {
 
         if (!isPreparationWasStartedOnce) {
             testService.prepareTestData();
             isPreparationWasStartedOnce = true;
         }
 
-        List<User> users;
+        List<UserResponseDto> users;
 
         if (name != null) {
             users = userService.getUsersByName(name);
