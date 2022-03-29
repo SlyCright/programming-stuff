@@ -26,6 +26,6 @@ public class ProgrammingStuffApplication {
                 .build();
     }
 
-    //todo q: where I can place my code to execute after spring makes all preparations
+    //todo @PostConstruct (maybe other annotations with "context") q: where I can place my code to execute after spring makes all preparations
 
 }
