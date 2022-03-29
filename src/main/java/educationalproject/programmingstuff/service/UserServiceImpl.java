@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersByName(name);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.getUsersByIdIsNotNull();
+    }
+
 }

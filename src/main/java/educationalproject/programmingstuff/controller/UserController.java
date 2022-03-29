@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService; //todo q: What if several implementations exits? What object will be injected?
+    private final UserService userService;
 
     private final UserRepository userRepository;
 
@@ -31,18 +31,20 @@ public class UserController {
     boolean isPreparationWasStartedOnce = false;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> usersByName(@RequestParam String name) {
-
-        //todo q: What if "name" is empty? What if include numbers or something? where and when we checks requests?
+    public ResponseEntity<List<User>> usersByName(@RequestParam(required = false) String name) {
 
         if (!isPreparationWasStartedOnce) {
             testService.prepareTestData();
             isPreparationWasStartedOnce = true;
         }
 
-        List<User> users = userService.getUsersByName(name);
+        List<User> users;
 
-        int usersTotal=users.size(); //todo q: how to make two-parts response? If "usersTotal" used in HTML header for example.
+        if (name != null) {
+            users = userService.getUsersByName(name);
+        } else {
+            users = userService.getAllUsers();
+        }
 
         return ResponseEntity.ok(users);
 
