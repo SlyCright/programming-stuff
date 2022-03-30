@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.service.dto;
+package educationalproject.programmingstuff.servicies.dto;
 
 import educationalproject.programmingstuff.model.Order;
 import lombok.Value;

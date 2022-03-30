@@ -1,11 +1,11 @@
-package educationalproject.programmingstuff.service;
+package educationalproject.programmingstuff.servicies;
 
 import educationalproject.programmingstuff.model.Item;
 import educationalproject.programmingstuff.model.Order;
 import educationalproject.programmingstuff.model.User;
-import educationalproject.programmingstuff.repository.ItemRepository;
-import educationalproject.programmingstuff.repository.OrderRepository;
-import educationalproject.programmingstuff.repository.UserRepository;
+import educationalproject.programmingstuff.repositories.ItemRepository;
+import educationalproject.programmingstuff.repositories.OrderRepository;
+import educationalproject.programmingstuff.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +67,7 @@ public class TestService {
         userRepository.saveAndFlush(userUno);
         userRepository.saveAndFlush(userDos);
         userRepository.saveAndFlush(userTres);
-
+//todo q: why testItem and testOrder nested in all three users.
     }
 
 }
