@@ -13,7 +13,6 @@ public interface UserResponseMapper {
     @Mapping(target = "userName", source = "name")
     UserResponseDto makeUserResponseOf(User user);
 
-    @Mapping(target = "userName", source = "name")
     List<UserResponseDto> makeUsersResponseOf(List<User> users);
 
 }

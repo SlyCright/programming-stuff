@@ -1,12 +1,17 @@
+--- BACKLOG (SP stands for "Story points")
+
+  ??? SP: Errors and Exceptions processing
 
 ---- TODO
 
-  Add DTO with mapstruct
-    DTO package
-    And mappers
+  Add POST endpoint
+  Add validation
 
 ---- DONE
 
+Add DTO with mapstruct
+    DTO package
+    And mappers
 Make endpoint "GetUserByName"
 Add ResponseEntity.ok in controller
 Design and make relationships (associations) between entities
