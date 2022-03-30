@@ -1,11 +1,12 @@
 package educationalproject.programmingstuff.service;
 
-import educationalproject.programmingstuff.model.User;
+import educationalproject.programmingstuff.service.dto.UserResponseDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getUsersByName(String name);
+    List<UserResponseDto> getUsersByName(String name);
 
+    List<UserResponseDto> getAllUsers();
 }

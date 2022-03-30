@@ -1,11 +1,12 @@
 package educationalproject.programmingstuff.controller;
 
-import educationalproject.programmingstuff.model.User;
+
 import educationalproject.programmingstuff.repository.ItemRepository;
 import educationalproject.programmingstuff.repository.OrderRepository;
 import educationalproject.programmingstuff.repository.UserRepository;
 import educationalproject.programmingstuff.service.TestService;
 import educationalproject.programmingstuff.service.UserService;
+import educationalproject.programmingstuff.service.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService; //todo q: What if several implementations exits? What object will be injected?
+    private final UserService userService;
 
     private final UserRepository userRepository;
 
@@ -31,18 +32,20 @@ public class UserController {
     boolean isPreparationWasStartedOnce = false;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> usersByName(@RequestParam String name) {
-
-        //todo q: What if "name" is empty? What if include numbers or something? where and when we checks requests?
+    public ResponseEntity<List<UserResponseDto>> usersByName(@RequestParam(required = false) String name) {
 
         if (!isPreparationWasStartedOnce) {
             testService.prepareTestData();
             isPreparationWasStartedOnce = true;
         }
 
-        List<User> users = userService.getUsersByName(name);
+        List<UserResponseDto> users;
 
-        int usersTotal=users.size(); //todo q: how to make two-parts response? If "usersTotal" used in HTML header for example.
+        if (name != null) {
+            users = userService.getUsersByName(name);
+        } else {
+            users = userService.getAllUsers();
+        }
 
         return ResponseEntity.ok(users);
 
