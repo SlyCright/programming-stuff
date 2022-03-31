@@ -1,28 +1,47 @@
-package educationalproject.programmingstuff.servicies;
+package educationalproject.programmingstuff.tests_integrations;
 
+import educationalproject.programmingstuff.controller.UserController;
 import educationalproject.programmingstuff.model.Item;
 import educationalproject.programmingstuff.model.Order;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.ItemRepository;
 import educationalproject.programmingstuff.repositories.OrderRepository;
 import educationalproject.programmingstuff.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-@Service
-@RequiredArgsConstructor
-public class TestService {
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-    private final UserRepository userRepository;
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserControllerTest {
 
-    private final ItemRepository itemRepository;
+    @Autowired
+    private MockMvc mockMvc;
 
-    private final OrderRepository orderRepository;
+    @Autowired
+    private UserController userController;
 
-    public void prepareTestData() {
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @BeforeEach
+    private void prepareTestData() {
 
         Item item = Item.builder()
                 .title("stuff")
@@ -53,13 +72,11 @@ public class TestService {
         User userDos = User.builder()
                 .name("John")
                 .surname("NotSmith")
-                .orders(testOrders)
                 .build();
 
         User userTres = User.builder()
                 .name("Ivan")
                 .surname("Kuznets")
-                .orders(testOrders)
                 .build();
 
         itemRepository.saveAndFlush(item);
@@ -67,7 +84,20 @@ public class TestService {
         userRepository.saveAndFlush(userUno);
         userRepository.saveAndFlush(userDos);
         userRepository.saveAndFlush(userTres);
-//todo q: why testItem and testOrder nested in all three users.
     }
 
+    @Test
+    void givenGetUsersEndpointIncomes_whenResponseUsersTriggered_thenCorrectUsersListReturned() throws Exception {
+
+        //Given
+
+        //When
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/users"));
+
+        // Then
+
+        resultActions.andExpect(status().isOk());
+
+    }
 }

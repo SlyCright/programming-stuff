@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Transactional  // To reviewer: check this out. I've google this by myself. Test won't rise up without this.
-        // Now explanation needed. I didn't google explanation yet :)
+                // Now explanation needed. I didn't google explanation yet :)
 class UserServiceImplTest {
 
     @Autowired
@@ -24,11 +24,9 @@ class UserServiceImplTest {
     @Test
     void givenUserCreateRequestDto_whenCreateNewUser_thenUserWithUniqIdAppears() {
 
-        UserCreateRequestDto userShoudBeCreated;
-
         //Given
 
-        userShoudBeCreated = UserCreateRequestDto.builder()
+        UserCreateRequestDto userShouldBeCreated = UserCreateRequestDto.builder()
                 .userName("John")
                 .surname("Smith")
                 .build();
@@ -41,17 +39,18 @@ class UserServiceImplTest {
 
         //When
 
-        userService.createUser(userShoudBeCreated);
-        users = userService.getAllUsers();
+        userService.createUser(userShouldBeCreated);
 
         //Then
 
+        users = userService.getAllUsers();
+        UserResponseDto userWhichWasReturned = users.get(users.size() - 1);
+
         assertNotNull(users);
         assertEquals(i + 1, users.size());
-        UserResponseDto userWhichWasReturned = users.get(users.size() - 1);
         assertNotNull(userWhichWasReturned.getId());
-        assertEquals(userShoudBeCreated.getUserName(), userWhichWasReturned.getUserName());
-        assertEquals(userShoudBeCreated.getSurname(), userWhichWasReturned.getSurname());
+        assertEquals(userShouldBeCreated.getUserName(), userWhichWasReturned.getUserName());
+        assertEquals(userShouldBeCreated.getSurname(), userWhichWasReturned.getSurname());
 
     }
 }
