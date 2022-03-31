@@ -15,6 +15,4 @@ public interface UserResponseMapper {
 
     List<UserResponseDto> makeUsersResponseOf(List<User> users);
 
-    @Mapping(source = "userName", target = "name")
-    User makeUserEntityOf(UserResponseDto userResponseDto);
 }

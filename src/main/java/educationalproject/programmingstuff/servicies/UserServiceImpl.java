@@ -2,22 +2,29 @@ package educationalproject.programmingstuff.servicies;
 
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.UserRepository;
+import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
+import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapper;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Primary
+@Validated
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     private final UserResponseMapper userResponseMapper;
+
+    private final UserCreateRequestMapper userCreateRequestMapper;
 
     @Override
     public List<UserResponseDto> getUsersByName(String name) {
@@ -32,16 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto saveUser(UserResponseDto userResponseDto) {
+    public UserResponseDto createUser(@Valid UserCreateRequestDto userDto) {
 
-        User userEntity = userResponseMapper.makeUserEntityOf(userResponseDto);
-        userRepository.saveAndFlush(userEntity);
+        User userEntityForSaving = userCreateRequestMapper.makeUserEntityOf(userDto);
 
-        String name = userEntity.getName();
-        List<User> userResponseDtos = userRepository.getUsersByName(name);
-        userEntity = userResponseDtos.get(0);
+        User userEntityWhichWasSaved = userRepository.saveAndFlush(userEntityForSaving);
 
-        return userResponseMapper.makeUserResponseOf(userEntity);
+        return userResponseMapper.makeUserResponseOf(userEntityWhichWasSaved);
     }
 
 }
