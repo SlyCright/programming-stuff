@@ -1,7 +1,7 @@
-package educationalproject.programmingstuff.service.mappers;
+package educationalproject.programmingstuff.servicies.mappers;
 
 import educationalproject.programmingstuff.model.User;
-import educationalproject.programmingstuff.service.dto.UserResponseDto;
+import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

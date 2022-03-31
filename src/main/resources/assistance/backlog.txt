@@ -4,15 +4,15 @@
 
 ---- TODO
 
-  Add POST endpoint
-  Add validation
+  Make integration tests for two endpoints (+ package)
 
 ---- DONE
-
+Add POST endpoint
+Add validation
 Add DTO with mapstruct
     DTO package
     And mappers
 Make endpoint "GetUserByName"
-Add ResponseEntity.ok in controller
+Add ResponseEntity.ok() in controller
 Design and make relationships (associations) between entities
 Add swagger

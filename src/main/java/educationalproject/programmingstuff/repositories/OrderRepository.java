@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.repository;
+package educationalproject.programmingstuff.repositories;
 
 import educationalproject.programmingstuff.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;

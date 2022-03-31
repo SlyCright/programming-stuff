@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -22,10 +24,14 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String description;
 
+    @NotNull
+    //todo q: how to make "@ValueOfPrice(equal or higher than 0.01)" constrain
     private BigDecimal price;
 
     @ManyToOne(cascade = CascadeType.ALL)
