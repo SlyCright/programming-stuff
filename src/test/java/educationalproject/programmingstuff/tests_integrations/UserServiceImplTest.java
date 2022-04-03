@@ -14,15 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@Transactional  // To reviewer: check this out. I've google this by myself. Test won't rise up without this.
-                // Now explanation needed. I didn't google explanation yet :)
+@Transactional
 class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
 
     @Test
-    void givenUserCreateRequestDto_whenCreateNewUser_thenUserWithUniqIdAppears() {
+    void givenUserCreateRequestDto_whenCreateNewUser_thenReturnUseWithUniqId() {
 
         //Given
 

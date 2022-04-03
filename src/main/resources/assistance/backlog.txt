@@ -1,12 +1,14 @@
 --- BACKLOG (SP stands for "Story points")
 
+  SQL
   ??? SP: Errors and Exceptions processing
 
 ---- TODO
 
-  Make integration tests for two endpoints (+ package)
+  Make unit tests for services and controllers (@WebMvcTest, @ExtendedWith, @Mock, @Spy, @InjectMock)
 
 ---- DONE
+Make integration tests for two endpoints (+ package)
 Add POST endpoint
 Add validation
 Add DTO with mapstruct
