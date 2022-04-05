@@ -7,7 +7,6 @@ import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapper;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,7 +15,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Primary
 @Validated
 public class UserServiceImpl implements UserService {
 
@@ -34,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponseDto> getAllUsers() {
-        List<User> users = userRepository.getUsersByIdIsNotNull();
+        List<User> users = userRepository.findAll();
         return userResponseMapper.makeUsersResponseOf(users);
     }
 

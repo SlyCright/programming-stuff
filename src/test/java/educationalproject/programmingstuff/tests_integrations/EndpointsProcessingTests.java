@@ -2,8 +2,7 @@ package educationalproject.programmingstuff.tests_integrations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import educationalproject.programmingstuff.model.Item;
-import educationalproject.programmingstuff.model.Order;
+import educationalproject.programmingstuff.TestDataCreator;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.ItemRepository;
 import educationalproject.programmingstuff.repositories.OrderRepository;
@@ -26,8 +25,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,45 +66,8 @@ class EndpointsProcessingTests {
     @BeforeEach
     private void prepareTestData() {
 
-        Item item = Item.builder()
-                .title("stuff")
-                .description("Stuff of things")
-                .price(BigDecimal.valueOf(99.99))
-                .build();
-
-        ArrayList<Item> testItems = new ArrayList<>();
-        testItems.add(item);
-
-        Order order = Order.builder()
-                .items(testItems)
-                .build();
-
-        item.setOrder(order);
-
-        ArrayList<Order> testOrders = new ArrayList<>();
-        testOrders.add(order);
-
-        User userUno = User.builder()
-                .name("John")
-                .surname("Smith")
-                .orders(testOrders)
-                .build();
-
-        order.setUser(userUno);
-
-        User userDos = User.builder()
-                .name("John")
-                .surname("NotSmith")
-                .build();
-
-        User userTres = User.builder()
-                .name("Ivan")
-                .surname("Kuznets")
-                .build();
-
-        itemRepository.saveAndFlush(item);
-        orderRepository.saveAndFlush(order);
-        userRepository.saveAllAndFlush(List.of(userUno, userDos, userTres));
+        List<User> users= TestDataCreator.getTestUsers();
+        userRepository.saveAllAndFlush(users);
 
     }
 
@@ -117,7 +77,7 @@ class EndpointsProcessingTests {
 
         //Given
         request = MockMvcRequestBuilders.get("/users");
-        userEntities = userRepository.getUsersByIdIsNotNull();
+        userEntities = userRepository.findAll();
         userResponseDtos = userResponseMapper.makeUsersResponseOf(userEntities);
         expectedResponse = objectMapper.writeValueAsString(userResponseDtos);
 
