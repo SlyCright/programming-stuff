@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestDataCreator {
+public class TestDataFactory {
 
     static public List<User> getTestUsers() {
 
@@ -55,11 +55,8 @@ public class TestDataCreator {
         return List.of(userUno, userDos, userTres);
     }
 
-    static public UserCreateRequestDto getUserCreateRequestDto() {
-        return UserCreateRequestDto.builder()
-                .userName("Sasha")
-                .surname("Grey")
-                .build();
+    static public UserCreateRequestDto.UserCreateRequestDtoBuilder getUserCreateRequestDtoBuilder() {
+        return UserCreateRequestDto.builder();
     }
 
 }

@@ -1,6 +1,6 @@
 package educationalproject.programmingstuff.tests_units;
 
-import educationalproject.programmingstuff.TestDataCreator;
+import educationalproject.programmingstuff.TestDataFactory;
 import educationalproject.programmingstuff.controller.UserController;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
@@ -36,7 +36,7 @@ class UserControllerTest {
         userController.responseUsers(testName);
 
         //Then
-        Mockito.verify(userService, times(1)).getUsersByName(any());
+        Mockito.verify(userService).getUsersByName(any());
         Mockito.verify(userService, times(0)).getAllUsers();
         Mockito.verify(userService, times(0)).createUser(any());
 
@@ -53,7 +53,7 @@ class UserControllerTest {
 
         //Then
         Mockito.verify(userService, times(0)).getUsersByName(any());
-        Mockito.verify(userService, times(1)).getAllUsers();
+        Mockito.verify(userService).getAllUsers();
         Mockito.verify(userService, times(0)).createUser(any());
 
     }
@@ -65,13 +65,16 @@ class UserControllerTest {
         String testName = null;
 
         //When
-        UserCreateRequestDto userForCreation = TestDataCreator.getUserCreateRequestDto();
+        UserCreateRequestDto userForCreation = TestDataFactory.getUserCreateRequestDtoBuilder()
+                .userName("Sasha")
+                .surname("Grey")
+                .build();
         userController.createUser(userForCreation);
 
         //Then
         Mockito.verify(userService, times(0)).getUsersByName(any());
         Mockito.verify(userService, times(0)).getAllUsers();
-        Mockito.verify(userService, times(1)).createUser(any());
+        Mockito.verify(userService).createUser(any());
 
     }
 

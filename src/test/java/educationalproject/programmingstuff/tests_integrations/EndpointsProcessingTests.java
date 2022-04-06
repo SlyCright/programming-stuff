@@ -2,7 +2,7 @@ package educationalproject.programmingstuff.tests_integrations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import educationalproject.programmingstuff.TestDataCreator;
+import educationalproject.programmingstuff.TestDataFactory;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.ItemRepository;
 import educationalproject.programmingstuff.repositories.OrderRepository;
@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -62,7 +62,7 @@ class EndpointsProcessingTests {
     @BeforeEach
     private void prepareTestData() {
 
-        List<User> users = TestDataCreator.getTestUsers();
+        List<User> users = TestDataFactory.getTestUsers();
         userRepository.saveAllAndFlush(users);
 
     }
@@ -124,11 +124,11 @@ class EndpointsProcessingTests {
         String content = response.getContentAsString();
         UserResponseDto userResponseDto = objectMapper.readValue(content, UserResponseDto.class);
 
-        assertNotNull(userResponseDto.getId());
-        assertEquals(usersTotalBeforeNewOneCreation + 1, getAmountOfRegisteredUsers());
-        assertEquals("Sasha", userResponseDto.getUserName());
-        assertEquals("Grey", userResponseDto.getSurname());
-        assertNull(userResponseDto.getOrders());
+        assertThat(userResponseDto.getId()).isNotNull();
+        assertThat(getAmountOfRegisteredUsers()).isEqualTo(usersTotalBeforeNewOneCreation + 1);
+        assertThat(userResponseDto.getUserName()).isEqualTo("Sasha");
+        assertThat(userResponseDto.getSurname()).isEqualTo("Grey");
+        assertThat(userResponseDto.getOrders()).isNull();
 
     }
 

@@ -1,93 +1,107 @@
 package educationalproject.programmingstuff.tests_units;
 
-import educationalproject.programmingstuff.TestDataCreator;
+import educationalproject.programmingstuff.TestDataFactory;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.UserRepository;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
-import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapperImpl;
-import educationalproject.programmingstuff.servicies.mappers.UserResponseMapperImpl;
+import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapper;
+import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 class UserServiceImplTest {
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Spy
-    UserResponseMapperImpl userResponseMapper; // todo q: Can't spy interface. Even dude on stackoverflow can't
+    private UserResponseMapper userResponseMapper = Mappers.getMapper(UserResponseMapper.class);
 
     @Spy
-    UserCreateRequestMapperImpl userCreateRequestMapper;
+    private UserCreateRequestMapper userCreateRequestMapper = Mappers.getMapper(UserCreateRequestMapper.class);
 
     @InjectMocks
-    UserServiceImpl userService;
-
-    private List<User> users = TestDataCreator.getTestUsers();
+    private UserServiceImpl userService;
 
     @Test
-    void givenRequestForAllUsers_whenTriggered_thenSuccess() {
+    void whenGetAllUsers_thenSuccess() {
 
         //Given
+        List<User> users = List.of(
+                User.builder()
+                        .name("John")
+                        .surname("Smith")
+                        .build(),
+                User.builder()
+                        .name("John")
+                        .surname("NotSmith")
+                        .build(),
+                User.builder()
+                        .name("Ivan")
+                        .surname("Kuznets")
+                        .build()
+        ); //todo q: is that ok instead of "List<User> users = TestDataFactory.getTestUsers()"?
+
         Mockito.when(userRepository.findAll()).thenReturn(users);
 
         //When
         List<UserResponseDto> userResponseDtos = userService.getAllUsers();
 
         //Then
-        assertEquals(users.size(), userResponseDtos.size());
-        Mockito.verify(userRepository, times(1)).findAll();
+        assertThat(userResponseDtos.size()).isEqualTo(users.size());
+        Mockito.verify(userRepository).findAll();
     }
 
     @Test
-    void givenRequestsForUsersWithCertainName_whenServiceTriggered_thenReturnsUsersWithTheName() {
+    void givenUserName_whenGetUsersByName_thenSuccess() {
 
         //Given
-        assert users != null : "Check the test data preparations";
-        String testName = users.get(0).getName();
-        users = users.stream()
-                .filter(u -> u.getName().equals(testName))
-                .collect(Collectors.toList());
-        Mockito.when(userRepository.getUsersByName(testName)).thenReturn(users);
+        List<User> users = List.of(
+                User.builder()
+                        .name("John")
+                        .surname("Smith")
+                        .build()
+        );
+
+        Mockito.when(userRepository.getUsersByName("John")).thenReturn(users);
 
         //When
-        List<UserResponseDto> userResponseDtos = userService.getUsersByName(testName);
+        List<UserResponseDto> userResponseDtos = userService.getUsersByName("John");
 
         //Then
-        assertEquals(users.size(), userResponseDtos.size());
-        Mockito.verify(userRepository, times(1)).getUsersByName(testName);
-        for (UserResponseDto userResponseDto : userResponseDtos) {
-            assertEquals(testName, userResponseDto.getUserName());
-        }
+        assertThat(userResponseDtos.size()).isEqualTo(1);
+        assertThat(userResponseDtos.get(0).getUserName()).isEqualTo("John");
 
     }
 
     @Test
-    void givenNewUserDto_whenServiceTriggered_thenEnsureTheNewUserSentToSave() {
+    void givenUserCreateRequestDto_whenCreateUser_thenSuccess() {
 
         //Given
-        UserCreateRequestDto expectedUser = TestDataCreator.getUserCreateRequestDto();
+        ArgumentCaptor<User> userForCreationCaptor = ArgumentCaptor.forClass(User.class);
+        UserCreateRequestDto expectedUser = TestDataFactory.getUserCreateRequestDtoBuilder()
+                .userName("Sasha")
+                .surname("Grey")
+                .build();
 
         //When
         userService.createUser(expectedUser);
-        ArgumentCaptor<User> userForCreationCaptor = ArgumentCaptor.forClass(User.class);
-        Mockito.verify(userRepository).saveAndFlush(userForCreationCaptor.capture());
 
         //Then
+        Mockito.verify(userRepository).saveAndFlush(userForCreationCaptor.capture());
         User resultUser = userForCreationCaptor.getValue();
-        assertEquals(resultUser.getName(), expectedUser.getUserName());
-        assertEquals(resultUser.getSurname(), expectedUser.getSurname());
+        assertThat(expectedUser.getUserName()).isEqualTo(resultUser.getName());
+        assertThat(expectedUser.getSurname()).isEqualTo(resultUser.getSurname());
 
     }
 
