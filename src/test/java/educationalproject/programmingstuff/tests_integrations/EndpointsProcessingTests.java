@@ -53,20 +53,16 @@ class EndpointsProcessingTests {
     @Autowired
     private UserService userService;
 
-    private RequestBuilder request;
+    private List<User> returnedUserEntities;
 
-    private List<User> userEntities;
-
-    private List<UserResponseDto> userResponseDtos;
-
-    private String expectedResponse;
+    private List<UserResponseDto> returnedUserResponseDtos;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     private void prepareTestData() {
 
-        List<User> users= TestDataCreator.getTestUsers();
+        List<User> users = TestDataCreator.getTestUsers();
         userRepository.saveAllAndFlush(users);
 
     }
@@ -76,13 +72,12 @@ class EndpointsProcessingTests {
     void givenGetEndpointUsersWithNoParam_whenEndpointTriggered_thenReturnAllUsers() throws Exception {
 
         //Given
-        request = MockMvcRequestBuilders.get("/users");
-        userEntities = userRepository.findAll();
-        userResponseDtos = userResponseMapper.makeUsersResponseOf(userEntities);
-        expectedResponse = objectMapper.writeValueAsString(userResponseDtos);
+        returnedUserEntities = userRepository.findAll();
+        returnedUserResponseDtos = userResponseMapper.makeUsersResponseOf(returnedUserEntities);
+        String expectedResponse = objectMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
-        ResultActions resultActions = mockMvc.perform(request);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/users"));
 
         //Then
         resultActions
@@ -95,14 +90,13 @@ class EndpointsProcessingTests {
     void givenGetEndpointUsersWithName_whenEndpointTriggered_thenReturnUsersWithThisName() throws Exception {
 
         //Given
-        String testName = "John";
-        request = MockMvcRequestBuilders.get("/users").param("name", testName);
-        userEntities = userRepository.getUsersByName(testName);
-        userResponseDtos = userResponseMapper.makeUsersResponseOf(userEntities);
-        expectedResponse = objectMapper.writeValueAsString(userResponseDtos);
+        returnedUserEntities = userRepository.getUsersByName("John");
+        returnedUserResponseDtos = userResponseMapper.makeUsersResponseOf(returnedUserEntities);
+        String expectedResponse = objectMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
-        ResultActions resultActions = mockMvc.perform(request);
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/users").param("name", "John"));
 
         //Then
         resultActions
@@ -115,16 +109,13 @@ class EndpointsProcessingTests {
     void givenPostEndpointUsersWithNewUser_whenEndpointTriggered_thenReturnThatUserWithNewId() throws Exception {
 
         //Given
-
-        String testName = "Sasha";
-        String testSurname = "Grey";
-
-        RequestBuilder request = prepareRequest(testName, testSurname);
+        RequestBuilder request = prepareRequest("Sasha", "Grey");
 
         int usersTotalBeforeNewOneCreation = getAmountOfRegisteredUsers();
 
         //When
-        MvcResult mvcResult = mockMvc.perform(request)
+        MvcResult mvcResult = mockMvc
+                .perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -135,8 +126,8 @@ class EndpointsProcessingTests {
 
         assertNotNull(userResponseDto.getId());
         assertEquals(usersTotalBeforeNewOneCreation + 1, getAmountOfRegisteredUsers());
-        assertEquals(testName,userResponseDto.getUserName());
-        assertEquals(testSurname,userResponseDto.getSurname());
+        assertEquals("Sasha", userResponseDto.getUserName());
+        assertEquals("Grey", userResponseDto.getSurname());
         assertNull(userResponseDto.getOrders());
 
     }
@@ -150,22 +141,17 @@ class EndpointsProcessingTests {
 
         String body = objectMapper.writeValueAsString(userCreateRequestDto);
 
-        request = MockMvcRequestBuilders.post("/users")
+        return MockMvcRequestBuilders
+                .post("/users")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON);
-
-        return request;
     }
 
     private int getAmountOfRegisteredUsers() {
 
         List<UserResponseDto> users = userService.getAllUsers();
 
-        if (users != null) {
-            return users.size();
-        }
-
-        return 0;
+        return users == null ? 0 : users.size();
     }
 
 }
