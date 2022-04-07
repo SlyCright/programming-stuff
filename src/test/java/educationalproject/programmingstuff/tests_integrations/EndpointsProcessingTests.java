@@ -2,7 +2,6 @@ package educationalproject.programmingstuff.tests_integrations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import educationalproject.programmingstuff.TestDataFactory;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.ItemRepository;
 import educationalproject.programmingstuff.repositories.OrderRepository;
@@ -11,6 +10,7 @@ import educationalproject.programmingstuff.servicies.UserService;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
+import educationalproject.programmingstuff.test_data_prep.TestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,12 +58,12 @@ class EndpointsProcessingTests {
 
     private List<UserResponseDto> returnedUserResponseDtos;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    final ObjectMapper jacksonMapper = new ObjectMapper();
 
     @BeforeEach
     private void prepareTestData() {
 
-        List<User> users = TestDataFactory.getTestUsers();
+        List<User> users = TestDataFactory.getUsersListBuilderWithDefaultUsers().build();
         userRepository.saveAllAndFlush(users);
 
     }
@@ -74,10 +75,10 @@ class EndpointsProcessingTests {
         //Given
         returnedUserEntities = userRepository.findAll();
         returnedUserResponseDtos = userResponseMapper.makeUsersResponseOf(returnedUserEntities);
-        String expectedResponse = objectMapper.writeValueAsString(returnedUserResponseDtos);
+        String expectedResponse = jacksonMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/users"));
+        ResultActions resultActions = mockMvc.perform(get("/users"));
 
         //Then
         resultActions
@@ -92,11 +93,12 @@ class EndpointsProcessingTests {
         //Given
         returnedUserEntities = userRepository.getUsersByName("John");
         returnedUserResponseDtos = userResponseMapper.makeUsersResponseOf(returnedUserEntities);
-        String expectedResponse = objectMapper.writeValueAsString(returnedUserResponseDtos);
+        String expectedResponse = jacksonMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/users").param("name", "John"));
+                get("/users")
+                .param("name", "John"));
 
         //Then
         resultActions
@@ -122,7 +124,7 @@ class EndpointsProcessingTests {
         //Then
         MockHttpServletResponse response = mvcResult.getResponse();
         String content = response.getContentAsString();
-        UserResponseDto userResponseDto = objectMapper.readValue(content, UserResponseDto.class);
+        UserResponseDto userResponseDto = jacksonMapper.readValue(content, UserResponseDto.class);
 
         assertThat(userResponseDto.getId()).isNotNull();
         assertThat(getAmountOfRegisteredUsers()).isEqualTo(usersTotalBeforeNewOneCreation + 1);
@@ -139,7 +141,7 @@ class EndpointsProcessingTests {
                 .surname(testSurname)
                 .build();
 
-        String body = objectMapper.writeValueAsString(userCreateRequestDto);
+        String body = jacksonMapper.writeValueAsString(userCreateRequestDto);
 
         return MockMvcRequestBuilders
                 .post("/users")

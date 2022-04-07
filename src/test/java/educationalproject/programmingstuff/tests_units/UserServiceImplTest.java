@@ -1,6 +1,5 @@
 package educationalproject.programmingstuff.tests_units;
 
-import educationalproject.programmingstuff.TestDataFactory;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.UserRepository;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
@@ -8,6 +7,7 @@ import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapper;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
+import educationalproject.programmingstuff.test_data_prep.TestDataFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -37,21 +37,7 @@ class UserServiceImplTest {
     void whenGetAllUsers_thenSuccess() {
 
         //Given
-        List<User> users = List.of(
-                User.builder()
-                        .name("John")
-                        .surname("Smith")
-                        .build(),
-                User.builder()
-                        .name("John")
-                        .surname("NotSmith")
-                        .build(),
-                User.builder()
-                        .name("Ivan")
-                        .surname("Kuznets")
-                        .build()
-        ); //todo q: is that ok instead of "List<User> users = TestDataFactory.getTestUsers()"?
-
+        List<User> users = TestDataFactory.getUsersListBuilderWithDefaultUsers().build();
         Mockito.when(userRepository.findAll()).thenReturn(users);
 
         //When
@@ -66,12 +52,11 @@ class UserServiceImplTest {
     void givenUserName_whenGetUsersByName_thenSuccess() {
 
         //Given
-        List<User> users = List.of(
-                User.builder()
-                        .name("John")
-                        .surname("Smith")
-                        .build()
-        );
+        List<User> users = List.of(User
+                .builder()
+                .name("John")
+                .surname("Smith")
+                .build());
 
         Mockito.when(userRepository.getUsersByName("John")).thenReturn(users);
 
@@ -89,7 +74,8 @@ class UserServiceImplTest {
 
         //Given
         ArgumentCaptor<User> userForCreationCaptor = ArgumentCaptor.forClass(User.class);
-        UserCreateRequestDto expectedUser = TestDataFactory.getUserCreateRequestDtoBuilder()
+        UserCreateRequestDto expectedUser = UserCreateRequestDto
+                .builder()
                 .userName("Sasha")
                 .surname("Grey")
                 .build();
@@ -102,7 +88,6 @@ class UserServiceImplTest {
         User resultUser = userForCreationCaptor.getValue();
         assertThat(expectedUser.getUserName()).isEqualTo(resultUser.getName());
         assertThat(expectedUser.getSurname()).isEqualTo(resultUser.getSurname());
-
     }
 
 }

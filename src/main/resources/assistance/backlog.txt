@@ -1,10 +1,20 @@
 --- BACKLOG
 
+  performing Code review
   SQL
   Errors and Exceptions processing
 
+
 ---- TODO
 
+  Flow: new order with items -> reserve items (with checks) -> confirm order   \
+
+  //----
+
+  add amounts of items in order entity
+  Storehouse repository
+  Correct current Entities and add new ones (Storehouse and maybe OrderItem)
+    - @anyToMany annotation
   Make unit tests for services and controllers
 
 ---- DONE

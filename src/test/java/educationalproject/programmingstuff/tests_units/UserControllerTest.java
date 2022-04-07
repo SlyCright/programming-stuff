@@ -1,39 +1,43 @@
 package educationalproject.programmingstuff.tests_units;
 
-import educationalproject.programmingstuff.TestDataFactory;
-import educationalproject.programmingstuff.controller.UserController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-//@WebMvcTest doesn't work fo me and for dude from stackoverflow as well (look down of the page): https://stackoverflow.com/questions/48078044/webmvctest-fails-with-java-lang-illegalstateexception-failed-to-load-applicati
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
+@WebMvcTest
+@AutoConfigureMockMvc
+@AutoConfigureWebMvc
 class UserControllerTest {
 
     @MockBean
     UserServiceImpl userService;
 
     @Autowired
-    UserController userController;
+    MockMvc mockMvc;
+
+    final ObjectMapper jacksonMapper = new ObjectMapper();
 
     @Test
-    void givenUserRequestWithName_whenControllerPassIt_thenUserServiceInvokeAppropriateMethod() {
+    void givenUserRequestWithName_whenResponseUsers_thenUserServiceInvokeAppropriateMethod() throws Exception {
 
         //Given
-        String testName = "testName";
 
         //When
-        userController.responseUsers(testName);
+        mockMvc.perform(get("/users").param("name", "John"));
 
         //Then
         Mockito.verify(userService).getUsersByName(any());
@@ -43,13 +47,12 @@ class UserControllerTest {
     }
 
     @Test
-    void givenUserRequestWithNoName_whenControllerPassIt_thenUserServiceInvokeAppropriateMethod() {
+    void givenUserRequestWithNoName_whenResponseUsers_thenUserServiceInvokeAppropriateMethod() throws Exception {
 
         //Given
-        String testName = null;
 
         //When
-        userController.responseUsers(testName);
+        mockMvc.perform(get("/users"));
 
         //Then
         Mockito.verify(userService, times(0)).getUsersByName(any());
@@ -59,17 +62,21 @@ class UserControllerTest {
     }
 
     @Test
-    void givenCreateUserPost_whenControllerPassIt_thenUserServiceInvokeAppropriateMethod() {
+    void givenCreateUserPost_whenCreateUser_thenUserServiceInvokeAppropriateMethod() throws Exception {
 
         //Given
-        String testName = null;
 
         //When
-        UserCreateRequestDto userForCreation = TestDataFactory.getUserCreateRequestDtoBuilder()
-                .userName("Sasha")
-                .surname("Grey")
-                .build();
-        userController.createUser(userForCreation);
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/users")
+                        .content(jacksonMapper.writeValueAsString(
+                                        UserCreateRequestDto
+                                                .builder()
+                                                .userName("userName")
+                                                .surname("Surname")
+                                                .build()))
+                        .contentType(MediaType.APPLICATION_JSON));
 
         //Then
         Mockito.verify(userService, times(0)).getUsersByName(any());
