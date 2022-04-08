@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(UserController.class)
@@ -36,7 +35,7 @@ class UserControllerTest {
         mockMvc.perform(get("/users").param("name", "John"));
 
         //Then
-        Mockito.verify(userService).getUsersByName(any());
+        Mockito.verify(userService).getUsersByName("John");
         Mockito.verifyNoMoreInteractions(userService);
 
     }
@@ -60,20 +59,24 @@ class UserControllerTest {
 
         //Given
 
+
         //When
         mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/users")
                         .content(jacksonMapper.writeValueAsString(
-                                        UserCreateRequestDto
-                                                .builder()
-                                                .userName("userName")
-                                                .surname("Surname")
-                                                .build()))
+                                UserCreateRequestDto
+                                        .builder()
+                                        .userName("userName")
+                                        .surname("Surname")
+                                        .build()))
                         .contentType(MediaType.APPLICATION_JSON));
 
         //Then
-        Mockito.verify(userService).createUser(any());
+        Mockito.verify(userService).createUser(UserCreateRequestDto.builder()
+                .userName("userName")
+                .surname("Surname")
+                .build());
 
     }
 
