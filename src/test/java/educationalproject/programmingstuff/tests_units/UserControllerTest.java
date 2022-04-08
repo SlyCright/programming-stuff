@@ -56,9 +56,7 @@ class UserControllerTest {
 
     @Test
     void givenCreateUserPost_whenCreateUser_thenUserServiceInvokeAppropriateMethod() throws Exception {
-
         //Given
-
 
         //When
         mockMvc.perform(
