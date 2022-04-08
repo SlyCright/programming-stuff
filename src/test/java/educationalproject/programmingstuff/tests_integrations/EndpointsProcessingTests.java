@@ -58,7 +58,7 @@ class EndpointsProcessingTests {
 
     private List<UserResponseDto> returnedUserResponseDtos;
 
-    final ObjectMapper jacksonMapper = new ObjectMapper();
+    private final ObjectMapper jacksonMapper = new ObjectMapper();
 
     @BeforeEach
     private void prepareTestData() {

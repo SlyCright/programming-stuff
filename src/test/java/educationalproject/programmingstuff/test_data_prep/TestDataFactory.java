@@ -1,9 +1,11 @@
 package educationalproject.programmingstuff.test_data_prep;
 
 import educationalproject.programmingstuff.model.User;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 
+@UtilityClass
 public class TestDataFactory {
 
     static public ListBuilder<User> getUsersListBuilderWithDefaultUsers() {
@@ -25,9 +27,6 @@ public class TestDataFactory {
                 )
         );
 
-    }
-
-    private TestDataFactory() {
     }
 
 }
