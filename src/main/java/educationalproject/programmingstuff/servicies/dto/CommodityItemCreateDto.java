@@ -1,25 +1,14 @@
-package educationalproject.programmingstuff.model;
+package educationalproject.programmingstuff.servicies.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "StoreHouse")
+@Value
 @Builder
-public class CommodityItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
+public class CommodityItemCreateDto {
 
     @NotBlank(message = "Empty title is not allowed")
     String title;
