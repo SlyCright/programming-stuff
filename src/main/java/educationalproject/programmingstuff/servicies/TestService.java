@@ -67,7 +67,6 @@ public class TestService {
         userRepository.saveAndFlush(userUno);
         userRepository.saveAndFlush(userDos);
         userRepository.saveAndFlush(userTres);
-//todo q: why testItem and testOrder nested in all three users.
     }
 
 }

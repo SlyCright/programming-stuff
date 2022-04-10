@@ -5,10 +5,14 @@ import lombok.Value;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Value
 @Builder
-public class CommodityItemCreateDto {
+public class CommodityItemResponseDto {
+
+    @NotNull(message = "Id can't be null")
+    long id;
 
     @NotBlank(message = "Empty title is not allowed")
     String title;

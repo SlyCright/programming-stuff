@@ -19,7 +19,7 @@ public class CommodityItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
+    long id;
 
     @NotBlank(message = "Empty title is not allowed")
     String title;
@@ -27,7 +27,7 @@ public class CommodityItem {
     @NotBlank(message = "Empty description is not allowed")
     String description;
 
-    @Min(value=0,message="Value mus be positive or zero")
+    @Min(value = 0, message = "Value mus be positive or zero")
     int quantity;
 
 }

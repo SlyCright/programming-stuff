@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponseDto> getAllUsers() {
-        List<User> users = userRepository.getUsersByIdIsNotNull();
+        List<User> users = userRepository.findAll();
         return userResponseMapper.makeUsersResponseOf(users);
     }
 
