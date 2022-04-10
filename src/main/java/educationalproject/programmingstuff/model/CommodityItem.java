@@ -19,15 +19,21 @@ public class CommodityItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @Column(unique = true)
+    private Item item;
 
     @NotBlank(message = "Empty title is not allowed")
-    String title;
+    //@Column(unique = true) todo fix with fake data generation
+    private String title;
 
     @NotBlank(message = "Empty description is not allowed")
-    String description;
+    private String description;
 
     @Min(value = 0, message = "Value mus be positive or zero")
-    int quantity;
+    private int quantity;
 
 }

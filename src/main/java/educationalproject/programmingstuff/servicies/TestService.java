@@ -1,7 +1,6 @@
 package educationalproject.programmingstuff.servicies;
 
 import educationalproject.programmingstuff.model.Item;
-import educationalproject.programmingstuff.model.Order;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.ItemRepository;
 import educationalproject.programmingstuff.repositories.OrderRepository;
@@ -33,38 +32,38 @@ public class TestService {
         ArrayList<Item> testItems = new ArrayList<>();
         testItems.add(item);
 
-        Order order = Order.builder()
-                .items(testItems)
-                .build();
+//        Order order = Order.builder()
+//                .items(testItems)
+//                .build();
 
-        item.setOrder(order);
+//        item.setOrder(order);
 
-        ArrayList<Order> testOrders = new ArrayList<>();
-        testOrders.add(order);
+//        ArrayList<Order> testOrders = new ArrayList<>();
+//        testOrders.add(order);
 
-        User userUno = User.builder()
-                .name("John")
-                .surname("Smith")
-                .orders(testOrders)
-                .build();
+//        User userUno = User.builder()
+//                .name("John")
+//                .surname("Smith")
+//                .orders(testOrders)
+//                .build();
 
-        order.setUser(userUno);
+//        order.setUser(userUno);
 
         User userDos = User.builder()
                 .name("John")
                 .surname("NotSmith")
-                .orders(testOrders)
+//                .orders(testOrders)
                 .build();
 
         User userTres = User.builder()
                 .name("Ivan")
                 .surname("Kuznets")
-                .orders(testOrders)
+//                .orders(testOrders)
                 .build();
 
         itemRepository.saveAndFlush(item);
-        orderRepository.saveAndFlush(order);
-        userRepository.saveAndFlush(userUno);
+//        orderRepository.saveAndFlush(order);
+//        userRepository.saveAndFlush(userUno);
         userRepository.saveAndFlush(userDos);
         userRepository.saveAndFlush(userTres);
     }

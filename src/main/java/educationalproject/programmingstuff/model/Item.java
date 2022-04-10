@@ -25,10 +25,11 @@ public class Item {
     private Long id;
 
     @NotBlank
-    private String title;
+    @Column(unique = true)
+    private String title; //todo exclude data duplication
 
     @NotBlank
-    private String description;
+    private String description; //todo data exclude duplication
 
     @NotNull
     //todo q: how to make "@ValueOfPrice(equal or higher than 0.01)" constrain
