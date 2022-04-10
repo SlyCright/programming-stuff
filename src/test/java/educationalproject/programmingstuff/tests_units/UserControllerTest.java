@@ -59,7 +59,6 @@ class UserControllerTest {
 
         //Given
 
-
         //When
         mockMvc.perform(
                 MockMvcRequestBuilders
