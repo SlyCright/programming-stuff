@@ -1,12 +1,24 @@
---- BACKLOG (SP stands for "Story points")
+--- BACKLOG
 
-  ??? SP: Errors and Exceptions processing
+  performing Code review
+  SQL
+  Errors and Exceptions processing
+
 
 ---- TODO
 
-  Make integration tests for two endpoints (+ package)
+  Flow: new order with items -> reserve items (with checks) -> confirm order   \
+
+  //----
+
+  add amounts of items in order entity
+  Storehouse repository
+  Correct current Entities and add new ones (Storehouse and maybe OrderItem)
+    - @anyToMany annotation
+  Make unit tests for services and controllers
 
 ---- DONE
+Make integration tests for two endpoints (+ package)
 Add POST endpoint
 Add validation
 Add DTO with mapstruct

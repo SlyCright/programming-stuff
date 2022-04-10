@@ -1,6 +1,5 @@
 package educationalproject.programmingstuff.controller;
 
-import educationalproject.programmingstuff.servicies.TestService;
 import educationalproject.programmingstuff.servicies.UserService;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
@@ -20,17 +19,8 @@ public class UserController {
 
     private final UserService userService;
 
-    private final TestService testService;
-
-    boolean isPreparationWasStartedOnce = false;
-
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> responseUsers(@RequestParam(required = false) String name) {
-
-        if (!isPreparationWasStartedOnce) {
-            testService.prepareTestData();
-            isPreparationWasStartedOnce = true;
-        }
 
         List<UserResponseDto> users;
 

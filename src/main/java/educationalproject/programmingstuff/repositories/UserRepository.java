@@ -11,6 +11,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> getUsersByName(String name);
 
-    List<User> getUsersByIdIsNotNull();
-
 }
