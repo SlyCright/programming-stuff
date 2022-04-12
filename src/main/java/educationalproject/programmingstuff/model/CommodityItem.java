@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -18,20 +17,12 @@ import javax.validation.constraints.NotBlank;
 public class CommodityItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    @Column(unique = true)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
+    @JoinColumn(name = "item_id")
     private Item item;
-
-    @NotBlank(message = "Empty title is not allowed")
-    //@Column(unique = true) todo fix with fake data generation
-    private String title;
-
-    @NotBlank(message = "Empty description is not allowed")
-    private String description;
 
     @Min(value = 0, message = "Value mus be positive or zero")
     private int quantity;

@@ -15,21 +15,21 @@ import java.math.BigDecimal;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor //todo g: if it needed RequiredArgsConstructors for Entities?
+@AllArgsConstructor
 @Entity
 @Table(name="Items")
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank
     @Column(unique = true)
-    private String title; //todo exclude data duplication
+    private String title;
 
     @NotBlank
-    private String description; //todo data exclude duplication
+    private String description;
 
     @NotNull
     //todo q: how to make "@ValueOfPrice(equal or higher than 0.01)" constrain

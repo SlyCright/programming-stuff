@@ -1,10 +1,10 @@
 package educationalproject.programmingstuff.servicies.dto;
 
+import educationalproject.programmingstuff.model.Item;
 import lombok.Builder;
 import lombok.Value;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Value
@@ -14,13 +14,10 @@ public class CommodityItemResponseDto {
     @NotNull(message = "Id can't be null")
     long id;
 
-    @NotBlank(message = "Empty title is not allowed")
-    String title;
+    @NotNull(message = "Item can't be null")
+    Item item; // TODO: 12.04.2022 Here should be DTO not Entity
 
-    @NotBlank(message = "Empty description is not allowed")
-    String description;
-
-    @Min(value=0,message="Value mus be positive or zero")
+    @Min(value = 0, message = "Value must be positive or zero")
     int quantity;
 
 }

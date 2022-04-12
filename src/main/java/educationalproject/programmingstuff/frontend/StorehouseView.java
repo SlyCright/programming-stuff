@@ -7,7 +7,6 @@ import com.vaadin.flow.router.Route;
 import educationalproject.programmingstuff.servicies.CommodityItemService;
 import educationalproject.programmingstuff.servicies.dto.CommodityItemResponseDto;
 
-
 @Route("/storehouse")
 @PageTitle("Storehouse")
 public class StorehouseView extends VerticalLayout {
@@ -33,7 +32,13 @@ public class StorehouseView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("commodity-item-grid");
         grid.setSizeFull();
-        grid.setColumns("id", "title", "description", "quantity");
+        grid.setColumns();
+        grid.addColumn(CommodityItemResponseDto::getId).setHeader("Storehouse ID");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getId()).setHeader("Item ID");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getTitle()).setHeader("Title");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getDescription()).setHeader("Description");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getPrice()).setHeader("Price");
+        grid.addColumn(CommodityItemResponseDto::getQuantity).setHeader("Quantity");
         grid.getColumns().forEach(c -> c.setAutoWidth(true));
         grid.getColumns().forEach(c -> c.setSortable(true));
     }

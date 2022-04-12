@@ -1,6 +1,6 @@
 package educationalproject.programmingstuff.tests_units;
 
-import educationalproject.programmingstuff.data.CommodityItemGenerator;
+import educationalproject.programmingstuff.data.EntitiesGenerator;
 import educationalproject.programmingstuff.model.CommodityItem;
 import educationalproject.programmingstuff.repositories.CommodityItemRepository;
 import educationalproject.programmingstuff.servicies.CommodityItemServiceImpl;
@@ -30,21 +30,21 @@ class CommodityItemServiceImplTest {
 
     @Spy
     @InjectMocks
-    CommodityItemServiceImpl commodityItemServiceImpl; // TODO: 10.04.2022 q: should be interface here?
+    CommodityItemServiceImpl commodityItemService;
 
     @Test
     void givenInvocationOfGetAllCommodityItems_whenInvoked_whenSucceed() {
 
         //Given
         List<CommodityItem> expectedCommodities = List.of(
-                CommodityItemGenerator.getCommodityItemBuilder().build(),
-                CommodityItemGenerator.getCommodityItemBuilder().build(),
-                CommodityItemGenerator.getCommodityItemBuilder().build());
+                EntitiesGenerator.getCommodityItemBuilder().build(),
+                EntitiesGenerator.getCommodityItemBuilder().build(),
+                EntitiesGenerator.getCommodityItemBuilder().build());
 
         Mockito.when(commodityItemRepository.findAll()).thenReturn(expectedCommodities);
 
         //When
-        List<CommodityItemResponseDto> resultCommodities = commodityItemServiceImpl.getAllCommodityItems();
+        List<CommodityItemResponseDto> resultCommodities = commodityItemService.getAllCommodityItems();
 
         //Then
         assertThat(resultCommodities.size()).isEqualTo(expectedCommodities.size());
@@ -53,10 +53,7 @@ class CommodityItemServiceImplTest {
 
             int index=resultCommodities.indexOf(result);
             CommodityItem expect = expectedCommodities.get(index);
-
-            assertThat(result.getId()).isEqualTo(expect.getId());
-            assertThat(result.getTitle()).isEqualTo(expect.getTitle());
-            assertThat(result.getDescription()).isEqualTo(expect.getDescription());
+            assertThat(result.getItem()).isEqualTo(expect.getItem());
             assertThat(result.getQuantity()).isEqualTo(expect.getQuantity());
         }
  

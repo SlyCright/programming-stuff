@@ -1,23 +1,36 @@
+
 --- BACKLOG
 
+  - UNPRIORITIZED
   performing Code review
-  SQL
   Errors and Exceptions processing
+  Adding viewports to every entity:
+    - Order
+    - Item
+    - OrderItem
+  Add active UI elements
 
+  - PRIORITIZED
+   To realize flow: new order with items -> reserve items (with checks) -> confirm order
+   SQL
 
----- TODO
+---- SPRINT
 
-  Flow: new order with items -> reserve items (with checks) -> confirm order   \
-
-  //----
-
-  add amounts of items in order entity
-  Storehouse repository
-  Correct current Entities and add new ones (Storehouse and maybe OrderItem)
-    - @anyToMany annotation
-  Make unit tests for services and controllers
+  project should start and bug fixing:
+    1. OneToOne connection between CommodityItem And Item
+        1.1 Remove data duplication ib fields "title" & "description" of Items & CommodityItems
+        1.2 Data generator should generate Items nor ComodityItems
+    2. Add amounts of items in order entity (@anyToMany annotation)
 
 ---- DONE
+
+-11.04
+Backlog grooming
+
+- 10.04.22
+Make unit tests for services and controllers
+Correct current Entities and add new ones (Storehouse and maybe OrderItem)
+Storehouse repository
 Make integration tests for two endpoints (+ package)
 Add POST endpoint
 Add validation

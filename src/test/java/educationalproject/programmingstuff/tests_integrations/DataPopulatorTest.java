@@ -1,27 +1,31 @@
 package educationalproject.programmingstuff.tests_integrations;
 
-import educationalproject.programmingstuff.data.StorehousePopulator;
+import educationalproject.programmingstuff.data.DataPopulator;
 import educationalproject.programmingstuff.repositories.CommodityItemRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static educationalproject.programmingstuff.data.StorehousePopulator.FAKE_COMMODITY_ITEMS_TOTAL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class StorehousePopulatorTest {
+class DataPopulatorTest {
 
     @Autowired
-    StorehousePopulator storeHousePopulator;
+    DataPopulator dataPopulator;
 
     @Autowired
     CommodityItemRepository commodityItemRepository;
 
-    @Test
-    void givenSpringContextStarted_whenCheckIfStorehousePopulated_thenSuccess() {
+    @Autowired
+    CommodityItemRepository itemRepository;
 
-        assertThat(commodityItemRepository.count()).isEqualTo(FAKE_COMMODITY_ITEMS_TOTAL);
+    @Test
+    void givenSpringContextStarted_whenCheckIfDataTablesPopulated_thenSuccess() {
+
+        assertThat(itemRepository.count()).isEqualTo(DataPopulator.ITEMS_TOTAL_TO_GENERATE);
+
+        assertThat(commodityItemRepository.count()).isEqualTo(DataPopulator.ITEMS_TOTAL_TO_GENERATE);
 
     }
 
