@@ -17,7 +17,7 @@ public class EntitiesGenerator {
 
     private final static String LANGUAGE = "en";
 
-    private final static String COUNTRY = "UK";
+    private final static String COUNTRY = "US";
 
     private final static int SEED = 0;
 
@@ -49,13 +49,7 @@ public class EntitiesGenerator {
 
     public Item.ItemBuilder getItemBuilder() {
 
-        String title;
-
-        do {
-            title = faker.commerce().productName();
-        } while (usedTitles.contains(title));
-
-        usedTitles.add(title);
+        String title = getUniqueTitle();
 
         return Item.builder()
                 .title(title)
@@ -64,6 +58,19 @@ public class EntitiesGenerator {
                         BigDecimal.valueOf(
                                 (double) faker.random().nextInt(MIN_PRICE_IN_CENTS, MAX_PRICE_IN_CENTS) / 100.0));
 
+    }
+
+    private String getUniqueTitle() {
+
+        String title;
+
+        do {
+            title = faker.commerce().productName();
+        } while (usedTitles.contains(title));
+
+        usedTitles.add(title);
+
+        return title;
     }
 
     private String getRandomShakespeareQuote() {

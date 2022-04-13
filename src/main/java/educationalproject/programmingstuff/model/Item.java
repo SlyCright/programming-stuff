@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,10 +36,9 @@ public class Item {
     //todo q: how to make "@ValueOfPrice(equal or higher than 0.01)" constrain
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
     @JsonIgnore
-    private Order order;
+    private List<OrderItem> orderItems;
 
 }
 
