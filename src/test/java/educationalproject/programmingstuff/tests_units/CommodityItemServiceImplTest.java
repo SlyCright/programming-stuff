@@ -33,29 +33,26 @@ class CommodityItemServiceImplTest {
     CommodityItemServiceImpl commodityItemService;
 
     @Test
-    void givenInvocationOfGetAllCommodityItems_whenInvoked_whenSucceed() {
+    void givenCommodityItems_whenGetAllCommodityItems_thenSuccess() {
 
         //Given
-        List<CommodityItem> expectedCommodities = List.of(
+        List<CommodityItem> givenCommodities = List.of(
                 EntitiesGenerator.getCommodityItemBuilder().build(),
                 EntitiesGenerator.getCommodityItemBuilder().build(),
                 EntitiesGenerator.getCommodityItemBuilder().build());
 
-        Mockito.when(commodityItemRepository.findAll()).thenReturn(expectedCommodities);
+        List<CommodityItemResponseDto> expectedCommodities = commodityItemResponseMapper
+                .makeCommodityItemResponseOf(givenCommodities);
+
+        Mockito.when(commodityItemRepository.findAll()).thenReturn(givenCommodities);
 
         //When
         List<CommodityItemResponseDto> resultCommodities = commodityItemService.getAllCommodityItems();
 
         //Then
-        assertThat(resultCommodities.size()).isEqualTo(expectedCommodities.size());
+        assertThat(resultCommodities).isEqualTo(expectedCommodities);
+        assertThat(resultCommodities.get(0).getItemResponseDto()).isNotNull();
 
-        for (CommodityItemResponseDto result: resultCommodities) {
-
-            int index=resultCommodities.indexOf(result);
-            CommodityItem expect = expectedCommodities.get(index);
-            assertThat(result.getItem()).isEqualTo(expect.getItem());
-            assertThat(result.getQuantity()).isEqualTo(expect.getQuantity());
-        }
- 
     }
+
 }

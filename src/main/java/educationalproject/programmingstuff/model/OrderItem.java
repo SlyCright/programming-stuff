@@ -25,7 +25,7 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @Min(value = 0, message = "Value mus be positive or zero")
+    @Min(value = 0, message = "Value must be positive or zero")
     private int quantity;
 
 }

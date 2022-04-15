@@ -7,10 +7,7 @@ import lombok.experimental.UtilityClass;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 @UtilityClass
 public class EntitiesGenerator {
@@ -28,6 +25,8 @@ public class EntitiesGenerator {
     private final static int MAX_OF_QUANTITY_RANGE = 50;
 
     private final static List<String> usedTitles = new ArrayList<>(MAX_OF_QUANTITY_RANGE);
+
+    private static final Map<String, Integer> titleIndexes = new HashMap<>();
 
     private final static int MIN_PRICE_IN_CENTS = 01;
 
@@ -62,11 +61,18 @@ public class EntitiesGenerator {
 
     private String getUniqueTitle() {
 
-        String title;
+        String title = faker.commerce().productName();
 
-        do {
-            title = faker.commerce().productName();
-        } while (usedTitles.contains(title));
+        if (usedTitles.contains(title)) {
+
+            Integer currentIndex = titleIndexes.get(title);
+            currentIndex = currentIndex == null ? 2 : currentIndex + 1;
+
+            titleIndexes.put(title, currentIndex);
+
+            title+= " v."+currentIndex;
+
+        }
 
         usedTitles.add(title);
 

@@ -34,12 +34,13 @@ public class StorehouseView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns();
         grid.addColumn(CommodityItemResponseDto::getId).setHeader("Storehouse ID");
-        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getId()).setHeader("Item ID");
-        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getTitle()).setHeader("Title");
-        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getDescription()).setHeader("Description");
-        grid.addColumn(commodityItemDto->commodityItemDto.getItem().getPrice()).setHeader("Price");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItemResponseDto().getId()).setHeader("Item ID");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItemResponseDto().getTitle()).setHeader("Title");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItemResponseDto().getDescription()).setHeader("Description");
+        grid.addColumn(commodityItemDto->commodityItemDto.getItemResponseDto().getPrice()).setHeader("Price");
         grid.addColumn(CommodityItemResponseDto::getQuantity).setHeader("Quantity");
         grid.getColumns().forEach(c -> c.setAutoWidth(true));
+        grid.getColumns().forEach(c -> c.setResizable(true));
         grid.getColumns().forEach(c -> c.setSortable(true));
     }
 

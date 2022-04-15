@@ -7,8 +7,8 @@ import lombok.Value;
 @Builder
 public class UserCreateRequestDto {
 
-    String userName;
+    public String userName;
 
-    String surname;
+    public String surname;
 
 }

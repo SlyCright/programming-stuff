@@ -1,3 +1,8 @@
+--- TO DISCUSS
+
+  https://projectlombok.org/features/Builder (public BuilderExample build())
+    - Strange syntax. How it works?
+    - Related topic: how fields verifications works in the DTO?
 
 --- BACKLOG
 
@@ -15,6 +20,13 @@
    SQL
 
 ---- SPRINT
+
+  TODO
+    - Сделать ендпоинт, который показывает все айтемы и количество на складе (+ нов. ДТО). Логика в сервисе в отдельном
+        методе
+   - Сделать ендпоинт, который создаст ордер на нужное количество йтемов и списать их со склада, если есть. Если на
+        складе не достаточно, выдать ошибку
+    - optional: гуглить как сделать, чтобы Хибернейт скидывал в логи запросы. С помощью проперти с форматированием
 
   project should start and bug fixing:
     1. OneToOne connection between CommodityItem And Item

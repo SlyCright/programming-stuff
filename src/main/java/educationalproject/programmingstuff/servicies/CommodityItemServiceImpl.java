@@ -5,7 +5,6 @@ import educationalproject.programmingstuff.repositories.CommodityItemRepository;
 import educationalproject.programmingstuff.servicies.dto.CommodityItemResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.CommodityItemResponseMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,11 +15,9 @@ import java.util.List;
 @Validated
 public class CommodityItemServiceImpl implements CommodityItemService {
 
-    @Autowired
-    private CommodityItemRepository commodityItemRepository;
+    private final CommodityItemRepository commodityItemRepository;
 
-    @Autowired
-    private CommodityItemResponseMapper commodityItemResponseMapper;
+    private final CommodityItemResponseMapper commodityItemResponseMapper;
 
     @Override
     public List<CommodityItemResponseDto> getAllCommodityItems() {
