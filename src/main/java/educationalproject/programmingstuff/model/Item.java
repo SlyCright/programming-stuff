@@ -11,20 +11,22 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor //todo g: if it needed RequiredArgsConstructors for Entities?
+@AllArgsConstructor
 @Entity
 @Table(name="Items")
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @NotBlank
+    @Column(unique = true)
     private String title;
 
     @NotBlank
@@ -34,10 +36,9 @@ public class Item {
     //todo q: how to make "@ValueOfPrice(equal or higher than 0.01)" constrain
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
     @JsonIgnore
-    private Order order;
+    private List<OrderItem> orderItems;
 
 }
 

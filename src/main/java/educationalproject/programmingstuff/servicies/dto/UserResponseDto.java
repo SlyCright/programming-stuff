@@ -9,12 +9,12 @@ import java.util.List;
 @Data
 public class UserResponseDto {
 
-    Long id;
+    public Long id;
 
-    String userName;
+    public String userName;
 
-    String surname;
+    public String surname;
 
-    List<Order> orders;
+    public List<Order> orders;
 
 }

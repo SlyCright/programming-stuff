@@ -21,7 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "No man can birth without name") //todo q: Why hibernate's "@NotBlank" is obsolete? Is it correct to place annotation of "javax.validation.constraints"
+    @NotBlank(message = "No man can birth without name")
     private String name;
 
     @NotBlank(message = "No man can live without surname")

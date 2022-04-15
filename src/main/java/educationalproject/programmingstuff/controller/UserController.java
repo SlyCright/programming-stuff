@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateRequestDto user) { //todo q: optional in swagger
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateRequestDto user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
