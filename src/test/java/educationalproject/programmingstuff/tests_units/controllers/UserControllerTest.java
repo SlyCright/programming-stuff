@@ -1,7 +1,7 @@
-package educationalproject.programmingstuff.tests_units;
+package educationalproject.programmingstuff.tests_units.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import educationalproject.programmingstuff.controller.UserController;
+import educationalproject.programmingstuff.controllers.UserController;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import org.junit.jupiter.api.Test;

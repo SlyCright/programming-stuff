@@ -78,11 +78,10 @@ class EndpointsProcessingTests {
         String expectedResponse = jacksonMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
-        ResultActions resultActions = mockMvc.perform(get("/users"));
+        ResultActions result = mockMvc.perform(get("/users"));
 
         //Then
-        resultActions
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(content().json(expectedResponse));
     }
 
@@ -98,7 +97,7 @@ class EndpointsProcessingTests {
         //When
         ResultActions resultActions = mockMvc.perform(
                 get("/users")
-                .param("name", "John"));
+                        .param("name", "John"));
 
         //Then
         resultActions

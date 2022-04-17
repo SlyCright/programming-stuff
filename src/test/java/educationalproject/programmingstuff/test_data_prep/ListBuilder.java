@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class ListBuilder<T> {
+public class ListBuilder<T> { // TODO: 17.04.2022 delete this shit out
     List<T> list;
 
     public ListBuilder<T> list(List<T> list){

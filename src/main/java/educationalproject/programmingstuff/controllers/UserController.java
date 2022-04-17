@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.controller;
+package educationalproject.programmingstuff.controllers;
 
 import educationalproject.programmingstuff.servicies.UserService;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Validated
@@ -34,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateRequestDto user) {
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserCreateRequestDto user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
