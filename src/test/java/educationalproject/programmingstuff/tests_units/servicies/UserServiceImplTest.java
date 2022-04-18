@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.tests_units;
+package educationalproject.programmingstuff.tests_units.servicies;
 
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.UserRepository;
