@@ -1,6 +1,6 @@
 package educationalproject.programmingstuff.servicies.mappers;
 
-import educationalproject.programmingstuff.model.CommodityItem;
+import educationalproject.programmingstuff.model.Item;
 import educationalproject.programmingstuff.servicies.dto.StoredItemsResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,11 +10,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface StoredItemsResponseMapper {
 
-    @Mapping(target = "itemNumber", source = "id")
-    @Mapping(target = "title", source = "item.title")
-    @Mapping(target = "description", source = "item.description")
-    @Mapping(target = "price", source = "item.price")
-    StoredItemsResponseDto makeStoredItemDtoOf(CommodityItem commodityItem);
+    @Mapping(source = "id", target = "itemNumber")
+    StoredItemsResponseDto makeStoredItemDtoOf(Item Item);
 
-    List<StoredItemsResponseDto> makeStoredItemDtoOf(List<CommodityItem> commodityItems);
+    List<StoredItemsResponseDto> makeStoredItemDtoOf(List<Item> Items);
 }

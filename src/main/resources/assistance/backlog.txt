@@ -1,11 +1,6 @@
 --- TO DISCUSS
 
-  https://projectlombok.org/features/Builder (public BuilderExample build())
-    - Strange syntax. How it works?
-    - Related topic: how fields verifications works in the DTO? (If instancing happens but no fields assignment, why there is no error?)
-  Issues on GitHub and Tasks and Context management in the IDE
-  Difference between attribute and field
-  EPAM learning courses (Java Basic)
+  How it looks 10_000 commodity items and what is name of them. Nice
 
 --- BACKLOG
 
@@ -29,6 +24,7 @@
     - Make an endpoint which create order with required quantity of items. Should happens write off from the storehouse.
         If there is no enough of items should return error.
     - optional: fasten a Hibernate's logger, which logs requests. (Will need properties with formatting)
+    - Try postman
 
 ---- DONE
 

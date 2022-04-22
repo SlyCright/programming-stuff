@@ -30,7 +30,7 @@ public class DataGenerationCommon {
 
     private final static int MAX_OF_QUANTITY_RANGE = 50;
 
-    String getRandomItemDescription() {
+    String getItemDescription() {
 
         switch (faker.random().nextInt(0, 3)) {
             case 0:
@@ -45,7 +45,7 @@ public class DataGenerationCommon {
 
     }
 
-    String getRandomUniqueItemTitle() {
+    String getUniqueItemTitle() {
 
         String title = faker.commerce().productName();
 
@@ -65,18 +65,26 @@ public class DataGenerationCommon {
         return title;
     }
 
-    @NotNull BigDecimal getRandomItemPrice() {
+    @NotNull BigDecimal getItemPrice() {
 
         return BigDecimal.valueOf(
                 (double) faker.random().nextInt(MIN_PRICE_IN_CENTS, MAX_PRICE_IN_CENTS) / 100.0);
 
     }
 
-    Integer getRandomItemQuantity() {
+    Integer getItemQuantity() {
         return faker.random().nextInt(MIN_OF_QUANTITY_RANGE, MAX_OF_QUANTITY_RANGE);
     }
 
-    long getRandomItemNumber() {
+    long getItemNumber() {
         return faker.number().numberBetween(0L, Long.MAX_VALUE);
+    }
+
+    public static String getName() {
+        return  faker.name().firstName();
+    }
+
+    public static String getSurname() {
+        return  faker.name().lastName();
     }
 }

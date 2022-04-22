@@ -2,6 +2,7 @@ package educationalproject.programmingstuff.data;
 
 import educationalproject.programmingstuff.model.CommodityItem;
 import educationalproject.programmingstuff.model.Item;
+import educationalproject.programmingstuff.model.User;
 import lombok.experimental.UtilityClass;
 
 import javax.validation.constraints.NotNull;
@@ -19,17 +20,22 @@ public class EntitiesGenerator {
 
         return CommodityItem.builder()
                 .item(item)
-                .quantity(DataGenerationCommon.getRandomItemQuantity());
+                .quantity(DataGenerationCommon.getItemQuantity());
 
     }
 
     public Item.ItemBuilder getItemBuilder() {
 
         return Item.builder()
-                .title(DataGenerationCommon.getRandomUniqueItemTitle())
-                .description(DataGenerationCommon.getRandomItemDescription())
-                .price(DataGenerationCommon.getRandomItemPrice());
+                .title(DataGenerationCommon.getUniqueItemTitle())
+                .description(DataGenerationCommon.getItemDescription())
+                .price(DataGenerationCommon.getItemPrice());
 
     }
 
+    public User.UserBuilder getUserBuilder(){
+        return User.builder()
+                .name(DataGenerationCommon.getName())
+                .surname(DataGenerationCommon.getSurname());
+    }
 }

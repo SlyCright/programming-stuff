@@ -8,13 +8,7 @@ import java.util.List;
 @UtilityClass
 public class TestDataFactory {
 
-    public User.UserBuilder getUserBuilder(){
-        return User.builder()
-                .name("John")
-                .surname("Smith");
-    }
-
-     public ListBuilder<User> getUsersListBuilderWithDefaultUsers() {
+    public ListBuilder<User> getUsersListBuilderWithDefaultUsers() {
 
         return new ListBuilder<User>(
                 List.of(
