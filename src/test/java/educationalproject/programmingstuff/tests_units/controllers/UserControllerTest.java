@@ -76,6 +76,20 @@ class UserControllerTest {
     }
 
     @Test
+    void givenUserRequestWithBlankName_whenResponseUsers_thenUserServiceInvokeAppropriateMethod() throws Exception {
+
+        //Given
+
+        //When
+        mockMvc.perform(get("/users").param("name", " "));
+
+        //Then
+        Mockito.verify(userService).getAllUsers();
+        Mockito.verifyNoMoreInteractions(userService);
+
+    }
+
+    @Test
     void givenCreateUserPost_whenCreateUser_thenUserServiceInvokeAppropriateMethod() throws Exception {
 
         //Given

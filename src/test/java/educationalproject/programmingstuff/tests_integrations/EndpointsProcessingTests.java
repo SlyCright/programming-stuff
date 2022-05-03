@@ -10,8 +10,6 @@ import educationalproject.programmingstuff.servicies.UserService;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
-import educationalproject.programmingstuff.test_data_prep.TestDataFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -59,14 +57,6 @@ class EndpointsProcessingTests {
     private List<UserResponseDto> returnedUserResponseDtos;
 
     private final ObjectMapper jacksonMapper = new ObjectMapper();
-
-    @BeforeEach
-    private void prepareTestData() {
-
-        List<User> users = TestDataFactory.getUsersListBuilderWithDefaultUsers().build();
-        userRepository.saveAllAndFlush(users);
-
-    }
 
     @Test
     @Transactional

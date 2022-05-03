@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +21,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> responseUsers(@RequestParam(required = false) @Nullable String name) {
-        Optional<String> nameOptional = Optional.ofNullable(name); // senior level programming :)
+    public ResponseEntity<List<UserResponseDto>> responseUsers(@RequestParam(required = false) Optional<String> name) {
         return ResponseEntity.ok(
-                nameOptional.isPresent() ?
-                        userService.getUsersByName(nameOptional.get()) :
-                        userService.getAllUsers());
+                name.isPresent() ?
+                        !name.get().isBlank() ?
+                                userService.getUsersByName(name.get())
+                                : userService.getAllUsers()
+                        : userService.getAllUsers());
     }
 
     @PostMapping

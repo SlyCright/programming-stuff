@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class StoredItemsMapperTest {
 
-    StoredItemsMapper storedItemsMapper = Mappers.getMapper(StoredItemsMapper.class);
+    private final StoredItemsMapper storedItemsMapper = Mappers.getMapper(StoredItemsMapper.class);
 
     @Test
     void givenCommodityItem_thenMakeStoredItemDto_thenSuccess() {

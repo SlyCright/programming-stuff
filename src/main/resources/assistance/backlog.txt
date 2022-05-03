@@ -1,6 +1,6 @@
 --- TO DISCUSS
 
-  How it looks 10_000 commodity items and what is name of them. Nice
+  How deep I should know Timsort?
 
 --- BACKLOG
 

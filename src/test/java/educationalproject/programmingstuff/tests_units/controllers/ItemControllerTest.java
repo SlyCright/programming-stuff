@@ -23,12 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ItemControllerTest {
 
     @MockBean
-    ItemServiceImpl itemService;
+    private ItemServiceImpl itemService;
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    final ObjectMapper jacksonMapper = new ObjectMapper();
+    private final ObjectMapper jacksonMapper = new ObjectMapper();
 
     @Test
     void givenItemsRequest_whenResponseStoredItems_thenCorrectResponse() throws Exception {

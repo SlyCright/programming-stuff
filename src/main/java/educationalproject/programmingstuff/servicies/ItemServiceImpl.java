@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Validated
@@ -28,16 +30,18 @@ public class ItemServiceImpl implements ItemService {
         List<CommodityItem> commodityItems = commodityItemRepository.findAll(); // don't mind it already has fielded items in it
         List<StoredItemsResponseDto> storedItemsResponseDtos = storedItemsResponseMapper.makeStoredItemDtoOf(items);
 
-        storedItemsResponseDtos.forEach(item ->
-                {
-                    var commodityItem = commodityItems.stream()
-                            .filter(ci -> ci.getItem().getId() == item.getItemNumber())
-                            .findFirst();
+        Map<Long, Integer> itemNumberMappedByQuantity = new HashMap<>();
 
-                    commodityItem.ifPresentOrElse(
-                            ci -> item.setQuantity(ci.getQuantity()),
-                            () -> item.setQuantity(0));
-                             // why "item.setQuantity(() -> {commodityItem.isPresent() ? commodityItem.get().getQuantity():0;});" doesn't work?
+        commodityItems.forEach(ci -> {
+            itemNumberMappedByQuantity.put(
+                    ci.getItem().getId(),
+                    ci.getQuantity()); // Have no idea how to use "Collectors.toMap()" Honestly, I tried
+        });
+
+        storedItemsResponseDtos.forEach(item -> {
+                    item.setQuantity(
+                            itemNumberMappedByQuantity.getOrDefault(
+                                    item.getItemNumber(), 0)); // Is that formatting ok? (I would prefer use two intermediary variables (and same above))
                 }
         );
 

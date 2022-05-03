@@ -2,6 +2,7 @@ package educationalproject.programmingstuff.servicies.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -24,6 +25,7 @@ public class StoredItemsResponseDto {
     String description;
 
     @NotNull
+    @NonNull
     BigDecimal price;
 
     @Min(value = 0, message = "Value must be positive or zero")
