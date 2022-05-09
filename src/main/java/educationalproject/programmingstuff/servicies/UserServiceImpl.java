@@ -38,11 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(@Valid UserCreateRequestDto userDto) {
-
         User userEntityForSaving = userCreateRequestMapper.makeUserEntityOf(userDto);
-
         User userEntityWhichWasSaved = userRepository.saveAndFlush(userEntityForSaving);
-
         return userResponseMapper.makeUserResponseOf(userEntityWhichWasSaved);
     }
 

@@ -1,5 +1,6 @@
-package educationalproject.programmingstuff.tests_units;
+package educationalproject.programmingstuff.tests_units.servicies;
 
+import educationalproject.programmingstuff.data.EntitiesGenerator;
 import educationalproject.programmingstuff.model.User;
 import educationalproject.programmingstuff.repositories.UserRepository;
 import educationalproject.programmingstuff.servicies.UserServiceImpl;
@@ -7,7 +8,6 @@ import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserCreateRequestMapper;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
-import educationalproject.programmingstuff.test_data_prep.TestDataFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -35,9 +35,11 @@ class UserServiceImplTest {
 
     @Test
     void whenGetAllUsers_thenSuccess() {
-
         //Given
-        List<User> users = TestDataFactory.getUsersListBuilderWithDefaultUsers().build();
+        List<User> users = List.of(
+                EntitiesGenerator.getUserBuilder().build(),
+                EntitiesGenerator.getUserBuilder().build(),
+                EntitiesGenerator.getUserBuilder().build());
         Mockito.when(userRepository.findAll()).thenReturn(users);
 
         //When

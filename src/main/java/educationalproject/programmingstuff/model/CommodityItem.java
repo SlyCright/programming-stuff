@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "StoreHouse")
+@Table(name = "Storehouse")
 @Builder
 public class CommodityItem {
 

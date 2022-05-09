@@ -10,8 +10,6 @@ import educationalproject.programmingstuff.servicies.UserService;
 import educationalproject.programmingstuff.servicies.dto.UserCreateRequestDto;
 import educationalproject.programmingstuff.servicies.dto.UserResponseDto;
 import educationalproject.programmingstuff.servicies.mappers.UserResponseMapper;
-import educationalproject.programmingstuff.test_data_prep.TestDataFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -60,14 +58,6 @@ class EndpointsProcessingTests {
 
     private final ObjectMapper jacksonMapper = new ObjectMapper();
 
-    @BeforeEach
-    private void prepareTestData() {
-
-        List<User> users = TestDataFactory.getUsersListBuilderWithDefaultUsers().build();
-        userRepository.saveAllAndFlush(users);
-
-    }
-
     @Test
     @Transactional
     void givenGetEndpointUsersWithNoParam_whenEndpointTriggered_thenReturnAllUsers() throws Exception {
@@ -78,11 +68,10 @@ class EndpointsProcessingTests {
         String expectedResponse = jacksonMapper.writeValueAsString(returnedUserResponseDtos);
 
         //When
-        ResultActions resultActions = mockMvc.perform(get("/users"));
+        ResultActions result = mockMvc.perform(get("/users"));
 
         //Then
-        resultActions
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(content().json(expectedResponse));
     }
 
@@ -98,7 +87,7 @@ class EndpointsProcessingTests {
         //When
         ResultActions resultActions = mockMvc.perform(
                 get("/users")
-                .param("name", "John"));
+                        .param("name", "John"));
 
         //Then
         resultActions

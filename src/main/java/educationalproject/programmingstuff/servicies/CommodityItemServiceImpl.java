@@ -21,8 +21,7 @@ public class CommodityItemServiceImpl implements CommodityItemService {
 
     @Override
     public List<CommodityItemResponseDto> getAllCommodityItems() {
-        List<CommodityItem> commodityItems = commodityItemRepository.findAll();
+        List<CommodityItem> commodityItems = commodityItemRepository.getAllCommodityItemsWithFetchedItems();
         return commodityItemResponseMapper.makeCommodityItemResponseOf(commodityItems);
     }
-
 }

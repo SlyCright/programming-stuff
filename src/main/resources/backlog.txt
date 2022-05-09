@@ -1,10 +1,12 @@
 --- TO DISCUSS
 
-  https://projectlombok.org/features/Builder (public BuilderExample build())
-    - Strange syntax. How it works?
-    - Related topic: how fields verifications works in the DTO?
 
 --- BACKLOG
+
+  - LECTURING
+     - microservices
+     - dockers
+     - ... whatever
 
   - UNPRIORITIZED
   performing Code review
@@ -17,26 +19,31 @@
 
   - PRIORITIZED
    To realize flow: new order with items -> reserve items (with checks) -> confirm order
-   SQL
+
 
 ---- SPRINT
 
   TODO
-    - Сделать ендпоинт, который показывает все айтемы и количество на складе (+ нов. ДТО). Логика в сервисе в отдельном
-        методе
-   - Сделать ендпоинт, который создаст ордер на нужное количество йтемов и списать их со склада, если есть. Если на
-        складе не достаточно, выдать ошибку
-    - optional: гуглить как сделать, чтобы Хибернейт скидывал в логи запросы. С помощью проперти с форматированием
+    - Make an endpoint which create order with required quantity of items. Should happens write off from the storehouse.
+        If there is no enough of items should return error.
+    - Try postman
 
+
+---- DONE
+
+- 09.05.22
+  - fasten a Hibernate's logger, which logs requests. (Will need properties with formatting)
+  - Make an endpoint which returns all items and stored quantity (Will need: a new DTO, a new method in the service)
+  - SQL introducing
+
+- 15.04.22
   project should start and bug fixing:
     1. OneToOne connection between CommodityItem And Item
         1.1 Remove data duplication ib fields "title" & "description" of Items & CommodityItems
         1.2 Data generator should generate Items nor ComodityItems
     2. Add amounts of items in order entity (@anyToMany annotation)
 
----- DONE
-
--11.04
+- 11.04.22
 Backlog grooming
 
 - 10.04.22

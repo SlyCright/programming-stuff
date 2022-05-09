@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataPopulator {
 
-    public final static int ITEMS_TOTAL_TO_GENERATE = 10_000;
+    public final static int ITEMS_TOTAL_TO_GENERATE = 3;
 
     @Bean
     public CommandLineRunner loadData(

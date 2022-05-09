@@ -1,4 +1,4 @@
-package educationalproject.programmingstuff.tests_units;
+package educationalproject.programmingstuff.tests_units.servicies;
 
 import educationalproject.programmingstuff.data.EntitiesGenerator;
 import educationalproject.programmingstuff.model.CommodityItem;
@@ -44,7 +44,7 @@ class CommodityItemServiceImplTest {
         List<CommodityItemResponseDto> expectedCommodities = commodityItemResponseMapper
                 .makeCommodityItemResponseOf(givenCommodities);
 
-        Mockito.when(commodityItemRepository.findAll()).thenReturn(givenCommodities);
+        Mockito.when(commodityItemRepository.getAllCommodityItemsWithFetchedItems()).thenReturn(givenCommodities);
 
         //When
         List<CommodityItemResponseDto> resultCommodities = commodityItemService.getAllCommodityItems();
