@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -30,18 +30,15 @@ public class ItemServiceImpl implements ItemService {
         List<CommodityItem> commodityItems = commodityItemRepository.findAll(); // don't mind it already has fielded items in it
         List<StoredItemsResponseDto> storedItemsResponseDtos = storedItemsResponseMapper.makeStoredItemDtoOf(items);
 
-        Map<Long, Integer> itemNumberMappedByQuantity = new HashMap<>();
-
-        commodityItems.forEach(ci -> {
-            itemNumberMappedByQuantity.put(
-                    ci.getItem().getId(),
-                    ci.getQuantity()); // Have no idea how to use "Collectors.toMap()" Honestly, I tried
-        });
+        Map<Long, Integer> itemNumberMappedByQuantity = commodityItems.stream()
+                .collect(Collectors.toMap(
+                        ci -> ci.getItem().getId(),
+                        CommodityItem::getQuantity));
 
         storedItemsResponseDtos.forEach(item -> {
                     item.setQuantity(
                             itemNumberMappedByQuantity.getOrDefault(
-                                    item.getItemNumber(), 0)); // Is that formatting ok? (I would prefer use two intermediary variables (and same above))
+                                    item.getItemNumber(), 0));
                 }
         );
 

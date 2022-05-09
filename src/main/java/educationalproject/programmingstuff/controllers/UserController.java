@@ -23,11 +23,9 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> responseUsers(@RequestParam(required = false) Optional<String> name) {
         return ResponseEntity.ok(
-                name.isPresent() ?
-                        !name.get().isBlank() ?
-                                userService.getUsersByName(name.get())
-                                : userService.getAllUsers()
-                        : userService.getAllUsers());
+                name.isPresent() && !name.get().isBlank() ?
+                        userService.getUsersByName(name.get()) :
+                        userService.getAllUsers());
     }
 
     @PostMapping

@@ -1,8 +1,12 @@
 --- TO DISCUSS
 
-  How deep I should know Timsort?
 
 --- BACKLOG
+
+  - LECTURING
+     - microservices
+     - dockers
+     - ... whatever
 
   - UNPRIORITIZED
   performing Code review
@@ -15,18 +19,22 @@
 
   - PRIORITIZED
    To realize flow: new order with items -> reserve items (with checks) -> confirm order
-   SQL
+
 
 ---- SPRINT
 
   TODO
-    - Make an endpoint which returns all items and stored quantity (Will need: a new DTO, a new method in the service)
     - Make an endpoint which create order with required quantity of items. Should happens write off from the storehouse.
         If there is no enough of items should return error.
-    - optional: fasten a Hibernate's logger, which logs requests. (Will need properties with formatting)
     - Try postman
 
+
 ---- DONE
+
+- 09.05.22
+  - fasten a Hibernate's logger, which logs requests. (Will need properties with formatting)
+  - Make an endpoint which returns all items and stored quantity (Will need: a new DTO, a new method in the service)
+  - SQL introducing
 
 - 15.04.22
   project should start and bug fixing:
