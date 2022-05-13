@@ -10,10 +10,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "Orders")
 public class Order {
 

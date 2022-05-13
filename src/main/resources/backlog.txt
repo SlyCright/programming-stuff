@@ -1,11 +1,11 @@
 --- TO DISCUSS
 
+  - how to handle the setters and getters in a concurrency situation
 
 --- BACKLOG
 
   - LECTURING
      - microservices
-     - dockers
      - ... whatever
 
   - UNPRIORITIZED
@@ -18,7 +18,9 @@
   Add active UI elements
 
   - PRIORITIZED
-   To realize flow: new order with items -> reserve items (with checks) -> confirm order
+    - dockers
+    - versioning
+    - To realize flow: new order with items -> reserve items (with checks) -> confirm order
 
 
 ---- SPRINT
