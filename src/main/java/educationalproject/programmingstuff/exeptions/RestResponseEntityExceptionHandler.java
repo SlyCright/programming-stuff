@@ -12,12 +12,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = NotEnoughItemsAtStoreException.class)
-    protected ResponseEntity<Object> handle(
-            NotEnoughItemsAtStoreException notEnoughItemsAtStoreException,
-            WebRequest request) {
-        String bodyOfResponse = notEnoughItemsAtStoreException.getMessage();
-        return handleExceptionInternal(notEnoughItemsAtStoreException, bodyOfResponse,
-                new HttpHeaders(), HttpStatus.CONFLICT, request);
+    protected ResponseEntity<Object> handle(NotEnoughItemsAtStoreException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return handleExceptionInternal(
+                ex,
+                bodyOfResponse,
+                new HttpHeaders(),
+                HttpStatus.CONFLICT,
+                request);
     }
 
 }

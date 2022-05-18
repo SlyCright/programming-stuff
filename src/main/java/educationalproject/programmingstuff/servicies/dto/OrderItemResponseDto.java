@@ -7,9 +7,7 @@ import lombok.Value;
 @Builder
 public class OrderItemResponseDto {
 
-    long orderID;
-
-    long itemID;
+    long itemId;
 
     int quantity;
 

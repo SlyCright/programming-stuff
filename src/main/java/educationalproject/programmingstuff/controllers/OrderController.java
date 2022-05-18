@@ -23,13 +23,6 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponseDto> makeOrder(@RequestBody @Valid OrderCreateRequestDto newOrder) {
-
-        // todo: test to this controller
-        // todo: if missing item then error 4xxx with message
-        // todo: make custom runtime exception class "not enough item"
-        // todo: this stuff with @ControllerAdvice
-        // todo: Exceptions packages needed
-
         return ResponseEntity.ok(orderService.book(newOrder));
     }
 

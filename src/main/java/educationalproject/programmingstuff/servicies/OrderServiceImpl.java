@@ -29,42 +29,16 @@ public class OrderServiceImpl implements OrderService {
     private final CommodityItemRepository commodityItemRepository;
 
     private final OrderRepository orderRepository;
-    private OrderResponseMapper orderResponseMapper;
+    private final OrderResponseMapper orderResponseMapper;
 
     @Override
     @Transactional
     public OrderResponseDto book(OrderCreateRequestDto newOrder) {
-        List<RequestedItemDto> requested = newOrder.getRequestedItemDtos();
-        List<CommodityItem> available = getAvailableCommodityItems(requested);
-        return writeOff(requested, available);
-    }
-
-    private List<CommodityItem> getAvailableCommodityItems(List<RequestedItemDto> requestedItemDtos) {
-        Set<Long> itemsId = requestedItemDtos.stream()
-                .map(RequestedItemDto::getItemId)
-                .collect(Collectors.toSet());
-        return commodityItemRepository.getCommodityItemsByItemIdIn(itemsId);
-    }
-
-    private OrderResponseDto writeOff(List<RequestedItemDto> requested, List<CommodityItem> available) {
-        Map<Long, Integer> requestedItemsIdMappedToQuantity = makeMapOf(requested);
-        WriteOffOrThrowException(available, requestedItemsIdMappedToQuantity);
-
-        List<OrderItem> orderItems = available.stream()
-                .map(availableCommodityItem -> {
-                    Item item = availableCommodityItem.getItem();
-                    return OrderItem.builder()
-                            .item(item)
-                            .quantity(requestedItemsIdMappedToQuantity.get(item.getId()))
-                            .build();
-                })
-                .collect(Collectors.toList());
-
-        Order order = Order.builder().orderItems(orderItems).build();
-
-        orderRepository.save(order);
-
-        return orderResponseMapper.makeOrderResponseOf(order);
+        List<RequestedItemDto> requestedItems = newOrder.getRequestedItemDtos();
+        Map<Long, Integer> requestedItemsIdMappedToQuantity = makeMapOf(requestedItems);
+        List<CommodityItem> availableItems = getAvailableCommodityItems(requestedItems);
+        writeOff(requestedItemsIdMappedToQuantity, availableItems);
+        return persistNewOrderOf(requestedItemsIdMappedToQuantity, availableItems);
     }
 
     private Map<Long, Integer> makeMapOf(List<RequestedItemDto> commodityItems) {
@@ -74,8 +48,14 @@ public class OrderServiceImpl implements OrderService {
                         RequestedItemDto::getQuantity));
     }
 
-    private void WriteOffOrThrowException(
-            List<CommodityItem> available, Map<Long, Integer> requestedItemsIdMappedToQuantity) {
+    private List<CommodityItem> getAvailableCommodityItems(List<RequestedItemDto> requestedItemDtos) {
+        Set<Long> itemsId = requestedItemDtos.stream()
+                .map(RequestedItemDto::getItemId)
+                .collect(Collectors.toSet());
+        return commodityItemRepository.getCommodityItemsByItemIdIn(itemsId);
+    }
+
+    private void writeOff(Map<Long, Integer> requestedItemsIdMappedToQuantity, List<CommodityItem> available) {
         available.forEach(
                 availableItem -> {
                     long itemId = availableItem.getItem().getId();
@@ -91,6 +71,23 @@ public class OrderServiceImpl implements OrderService {
                     }
                     availableItem.setQuantity(remainingQuantity);
                 });
+    }
+
+    private OrderResponseDto persistNewOrderOf(
+            final Map<Long, Integer> requestedItemsIdMappedToQuantity, final List<CommodityItem> available) {
+        List<OrderItem> orderItems = available.stream()
+                .map(availableCommodityItem -> {
+                    Item item = availableCommodityItem.getItem();
+                    return OrderItem.builder()
+                            .item(item)
+                            .quantity(requestedItemsIdMappedToQuantity.get(item.getId()))
+                            .build();
+                })
+                .collect(Collectors.toList());
+        Order order = Order.builder().orderItems(orderItems).build();
+        orderItems.forEach(orderItem->orderItem.setOrder(order));
+        orderRepository.save(order);
+        return orderResponseMapper.makeOrderResponseOf(order);
     }
 
 }
