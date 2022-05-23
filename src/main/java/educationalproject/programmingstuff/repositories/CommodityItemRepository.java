@@ -20,7 +20,7 @@ public interface CommodityItemRepository extends JpaRepository<CommodityItem, Lo
     @Query("SELECT ci, i FROM CommodityItem ci JOIN FETCH Item AS i ON ci.item.id=i.id")
     List<CommodityItem> getAllCommodityItemsWithFetchedItems();
 
-    @Query("SELECT c, i FROM CommodityItem c JOIN FETCH Item AS i WHERE c.item.id IN ?1")
+    @Query("SELECT c FROM CommodityItem c JOIN FETCH Item AS i ON c.item.id=i.id WHERE c.item.id IN :itemIds")
     List<CommodityItem> getCommodityItemsByItemIdIn(Set<Long> itemIds);
 
 }

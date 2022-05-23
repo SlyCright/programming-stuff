@@ -34,25 +34,19 @@ class CommodityItemServiceImplTest {
 
     @Test
     void givenCommodityItems_whenGetAllCommodityItems_thenSuccess() {
-
         //Given
         List<CommodityItem> givenCommodities = List.of(
                 EntitiesGenerator.getCommodityItemBuilder().build(),
                 EntitiesGenerator.getCommodityItemBuilder().build(),
                 EntitiesGenerator.getCommodityItemBuilder().build());
-
         List<CommodityItemResponseDto> expectedCommodities = commodityItemResponseMapper
                 .makeCommodityItemResponseOf(givenCommodities);
-
         Mockito.when(commodityItemRepository.getAllCommodityItemsWithFetchedItems()).thenReturn(givenCommodities);
-
         //When
         List<CommodityItemResponseDto> resultCommodities = commodityItemService.getAllCommodityItems();
-
         //Then
         assertThat(resultCommodities).isEqualTo(expectedCommodities);
         assertThat(resultCommodities.get(0).getItemResponseDto()).isNotNull();
-
     }
 
 }

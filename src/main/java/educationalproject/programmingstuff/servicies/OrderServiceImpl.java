@@ -29,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final CommodityItemRepository commodityItemRepository;
 
     private final OrderRepository orderRepository;
+
     private final OrderResponseMapper orderResponseMapper;
 
     @Override

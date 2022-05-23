@@ -1,14 +1,18 @@
 package educationalproject.programmingstuff.servicies.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@Value
+@Data
 @Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderCreateRequestDto {
 
-    List<RequestedItemDto> requestedItemDtos;
+     List<RequestedItemDto> requestedItemDtos;
 
 }
