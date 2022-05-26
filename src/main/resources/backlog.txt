@@ -26,12 +26,14 @@
 ---- SPRINT
 
   TODO
-    - Make an endpoint which create order with required quantity of items. Should happens write off from the storehouse.
-        If there is no enough of items should return error.
-    - Try postman
+    - Install Docker, rise PostgreSQL, switch between H2 and postgres, plug FlyWay, realize first version of DB, populate DB with testing data
 
 
 ---- DONE
+- 24.05.2022
+    - Make an endpoint which create order with required quantity of items. Should happens write off from the storehouse.
+        If there is no enough of items should return error.
+    - Try postman
 
 - 09.05.22
   - fasten a Hibernate's logger, which logs requests. (Will need properties with formatting)
