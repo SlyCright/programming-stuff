@@ -9,3 +9,17 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:55000/postgres
+    username: postgres
+    password: postgrespw
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres

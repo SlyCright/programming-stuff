@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface CommodityItemRepository extends JpaRepository<CommodityItem, Long> {
@@ -16,10 +17,10 @@ public interface CommodityItemRepository extends JpaRepository<CommodityItem, Lo
 //                    "JOIN storehouse AS commodity_item " + // "FULL JOIN" doesn't works with "syntax error". Why?
 //                    "ON item.id=commodity_item.item_id;")
 
-      @Query("SELECT ci, i FROM CommodityItem ci JOIN FETCH Item AS i ON ci.item.id=i.id")
-      List<CommodityItem> getAllCommodityItemsWithFetchedItems();
+    @Query("SELECT ci, i FROM CommodityItem ci JOIN FETCH Item AS i ON ci.item.id=i.id")
+    List<CommodityItem> getAllCommodityItemsWithFetchedItems();
 
-//    @EntityGraph(attributePaths = "{item}")
-//    List<CommodityItem> findAll();
+    @Query("SELECT c FROM CommodityItem c JOIN FETCH Item AS i ON c.item.id=i.id WHERE c.item.id IN :itemIds")
+    List<CommodityItem> getCommodityItemsByItemIdIn(Set<Long> itemIds);
 
 }
